@@ -8,19 +8,23 @@ import { useSubsStore } from "./store/subs.store";
 import { Home } from './pages/Home/Home';
 import { Tasks } from './pages/Tasks/Tasks';
 import { Profile } from './pages/Profile/Profile';
+import { Referrals } from './pages/Referrals/Referrals';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Load } from './components/Load/Load';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer/Footer';
 import { ModalProvider } from "./components/modal/ModalProvider";
+
 import { BuySubscriptionModal } from "./pages/Home/Modals/BuySubscription/BuySubscriptionModal";
+import { WithdrawModal } from './pages/Referrals/Modals/Withdraw/Withdraw';
 
 import { userApi } from "./api";
 import { useUserStore } from './store/user.store';
 
 const registry = {
   buySubscription: BuySubscriptionModal,
+  withdraw: WithdrawModal,
 } as const;
 
 function App() {
@@ -68,6 +72,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/tasks" element={<Tasks />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/profile/referrals" element={<Referrals />} />
               <Route path="/w" element={<div style={{ color: "white", padding: 24 }}>Tasks page</div>} />
             </Routes>
             <Footer />

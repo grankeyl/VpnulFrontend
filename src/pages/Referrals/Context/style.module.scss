@@ -1,0 +1,107 @@
+@use 'sass:math';
+
+.context {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.head {
+  position: relative;
+  width: 60%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+  overflow: visible;
+
+  .image {
+    .lottie {
+      width: 120px;
+      height: 120px;
+      position: relative;
+      z-index: 2;
+    }
+  }
+
+  .stars {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    pointer-events: none;
+    z-index: 0;
+
+    .star {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: url('/pages/home/star2.svg') center / contain no-repeat;
+      opacity: 0;
+      transform: translate(0, 0) scale(0.3);
+      will-change: transform, opacity;
+      animation: fly linear infinite;
+
+      @for $i from 1 through 70 {
+        &:nth-child(#{$i}) {
+          $x: math.random() * 600 - 300px; // овал по горизонтали
+          $y: math.random() * 240 - 120px; // овал по вертикали
+          $duration: math.random() * 3 + 3; // 3–6 секунд
+          $delay: math.random() * 3;
+
+          --x: #{$x};
+          --y: #{$y};
+          animation-duration: #{$duration}s;
+          animation-delay: #{$delay}s;
+          transform: translate(0,0) scale(math.random() * 0.7 + 0.3); // случайный размер
+        }
+      }
+    }
+
+    @keyframes fly {
+      0% {
+        transform: translate(0, 0) scale(var(--scale, 0.3));
+        opacity: 0;
+      }
+      10% { opacity: 1; }
+      80% { opacity: 1; }
+      100% {
+        transform: translate(var(--x), var(--y)) scale(var(--scale, 1));
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+
+  h4 {
+    color: #FFF;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 22px;
+  }
+}
+
+.descr {
+  text-align: center;
+  max-width: 210px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+  }
+}

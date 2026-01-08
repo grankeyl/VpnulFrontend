@@ -8,6 +8,7 @@ import { Items } from "./Items/Items";
 import { useSubsStore } from "../../store/subs.store";
 
 import * as subsApi from "../../api/subs/subs.api";
+import TelegramModule from '../../hooks/useTelegram';
 
 export function Home() {
     const [items, setItems] = useState<any[]>([]);
@@ -17,7 +18,6 @@ export function Home() {
     const setSubsData = useSubsStore((s) => s.setSubsData);
 
     const getSubs = async () => {
-        console.log("subsData", subsData);
         if (subsData) {
             setItems(subsData);
             setLoadingItems(false);
@@ -31,6 +31,7 @@ export function Home() {
     };
 
     useEffect(() => {
+        TelegramModule.hideBackButton();
         getSubs();
     }, []);
 
