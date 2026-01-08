@@ -1,7 +1,5 @@
 import styles from "./style.module.scss";
-
-// Components
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const Context = ({
   title,
@@ -11,18 +9,34 @@ export const Context = ({
   description: string;
 }) => {
   const [isSkeleton, setIsSkeleton] = useState(true);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
-  useEffect(() => {
-    const t = setTimeout(() => setIsSkeleton(false), 1000);
-    return () => clearTimeout(t);
-  }, []);
+  function handleImageLoaded() {
+    setImageLoaded(true);
+    setIsSkeleton(false);
+  }
 
   return (
-    <div className={`${styles.context} ${isSkeleton ? styles.skeleton : styles.reveal}`}>
+    <div
+      className={`${styles.context} ${
+        isSkeleton ? styles.skeleton : styles.reveal
+      }`}
+    >
       <div className={styles.head}>
         <div className={styles.skeletonBg} />
+
         <div className={styles.image}>
-          <img src="/pages/home/logo.png" alt="logo" />
+          {!imageLoaded && <div className={styles.load} />}
+
+          <img
+            src="/pages/home/logo.png"
+            alt="logo"
+            loading="eager"
+            onLoad={handleImageLoaded}
+            className={`${styles.img} ${
+              imageLoaded ? styles.visible : ""
+            }`}
+          />
         </div>
 
         <div className={styles.stars}>

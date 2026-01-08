@@ -92,3 +92,5 @@ button {
 @keyframes skShimmer {
   to { transform: translate3d(210%, 0, 0); }
 }
+
+@keyframes spin{ to{ transform:rotate(360deg); } }

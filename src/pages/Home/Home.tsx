@@ -5,15 +5,29 @@ import { Context } from "./Context/Context";
 import { Block } from "./Block/Block";
 import { Items } from "./Items/Items";
 
+import { useSubsStore } from "../../store/subs.store";
+
 import * as subsApi from "../../api/subs/subs.api";
 
 export function Home() {
     const [items, setItems] = useState<any[]>([]);
+    const [loadingItems, setLoadingItems] = useState(true);
+
+    const subsData = useSubsStore((s) => s.subsData);
+    const setSubsData = useSubsStore((s) => s.setSubsData);
 
     const getSubs = async () => {
+        console.log("subsData", subsData);
+        if (subsData) {
+            setItems(subsData);
+            setLoadingItems(false);
+            return;
+        };
         const res = await subsApi.subs();
         if (!res.ok) return;
         setItems(res.data);
+        setSubsData(res.data);
+        setLoadingItems(false);
     };
 
     useEffect(() => {
@@ -34,6 +48,7 @@ export function Home() {
                     redirect="/"
                 />
                 <Items 
+                    loading={loadingItems}
                     items={items}
                 />
             </div>

@@ -3,6 +3,7 @@ import './App.css';
 import TelegramModule from './hooks/useTelegram';
 
 import { useEffect, useState } from 'react';
+import { useSubsStore } from "./store/subs.store";
 
 import { Home } from './pages/Home/Home';
 import { Tasks } from './pages/Tasks/Tasks';
@@ -47,6 +48,11 @@ function App() {
   useEffect(() => {
     auth();
   }, []);
+
+  window.addEventListener("beforeunload", () => {
+    useSubsStore.getState().clearSubsData();
+    localStorage.removeItem("subs_store_v1");
+  });
 
   if (!mounted) {
     return <Load />;

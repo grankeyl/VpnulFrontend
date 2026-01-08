@@ -33,7 +33,7 @@
 .items {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(6px, 1.8vw, 10px);
+  gap: 0.6rem;
   min-width: 0;
   width: 100%;
   height: fit-content;
@@ -49,6 +49,8 @@
 
   .item {
     width: 100%;
+    aspect-ratio: 114 / 120;
+    height: fit-content;
     border-radius: clamp(12px, 3.6vw, 18px);
     background: #121212;
     position: relative;
@@ -79,7 +81,6 @@
     }
 
     &:active { transform: translateY(-1px) scale(0.98); }
-
 
     .skeletonBg {
       opacity: 0;
@@ -114,6 +115,7 @@
       right: -2px;
       width: clamp(55px, 5.5rem, 55px);
       height: 55px;
+      z-index: 1;
 
       .bg {
         background: linear-gradient(180deg, #6CADF2 1.81%, #126099 99.68%);
@@ -137,23 +139,27 @@
 
     .image {
       width: 100%;
-      height: fit-content;
       margin: auto;
       display: flex;
 
       img {
         width: 100%;
         height: 100%;
-        max-height: clamp(40px, 11vw, 55px);
+        max-height: 47px;
         object-fit: contain;
       }
+
+      .load {
+      }
+
+      @keyframes spin{ to{ transform:rotate(360deg); } }
     }
 
     .title {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: clamp(6px, 2vw, 10px);
+      margin-top: 8px;
 
       h4 {
         color: #fff;
@@ -167,7 +173,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: clamp(6px, 2vw, 10px);
+      margin-top: 10px;
       position: relative;
 
       button {
@@ -185,7 +191,7 @@
 
         h4 {
           color: #FFF;
-          font-size: 14px;
+          font-size: 15px;
           font-style: normal;
           font-weight: 400;
           line-height: normal;
@@ -216,3 +222,51 @@
       filter: none;
     }
   }
+
+.image {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.load {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.load::after {
+  content: "";
+  width: 28px;
+  height: 28px;
+  border: 2px solid #8d8d8d75;
+  border-top-color: #fff;
+  border-radius: 50%;
+  transform-origin: center;
+  animation: spin 1.2s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

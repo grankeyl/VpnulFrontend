@@ -6,25 +6,31 @@ import { useModal } from "../../../components/modal/ModalProvider";
 export type SubItem = any;
 
 type Props = {
+  loading?: boolean;
   items?: SubItem[];
 };
 
 const fallbackData: SubItem[] = Array.from({ length: 6 }, (_, i) => ({
   id: i,
-  title: "1 day",
-  price: "10.00р",
-  image: "https://i.ibb.co/4Z2pTPPG/level.png",
+  hours: "1",
+  price_rub: "10.00",
+  image: "..",
   saleAmount: 10,
 }));
 
-export const Items = ({ items = [] }: Props) => {
+export const Items = ({
+  loading = false,
+  items = [],
+}: Props) => {
   const { open } = useModal();
-  const [isSkeleton, setIsSkeleton] = useState(true);
+  const [isSkeleton, setIsSkeleton] = useState(loading);
+
+  // состояние загрузки картинок
+  const [loadedImages, setLoadedImages] = useState<Record<string | number, boolean>>({});
 
   useEffect(() => {
-    const t = setTimeout(() => setIsSkeleton(false), 1000);
-    return () => clearTimeout(t);
-  }, []);
+    setIsSkeleton(loading);
+  }, [loading]);
 
   const list = useMemo(() => {
     if (isSkeleton) return fallbackData;
@@ -36,21 +42,25 @@ export const Items = ({ items = [] }: Props) => {
     open("buySubscription", { item });
   }
 
+  function handleImageLoaded(id: string | number) {
+    setLoadedImages((prev) => ({
+      ...prev,
+      [id]: true,
+    }));
+  }
+
   return (
     <div className={styles.blocker}>
       <div className={styles.items}>
         {list.map((x, i) => {
           const key = x.id ?? i;
-          const title = x.title ?? "—";
-          const price =
-            typeof x.price === "number" ? x.price.toFixed(2) : (x.price ?? "—");
-          const image = x.image ?? fallbackData[0].image!;
-          const sale = !!x.sale && (x.saleAmount ?? 0) > 0;
+          const isLoaded = loadedImages[key];
 
           return (
             <div
               key={key}
               className={`${styles.item} ${isSkeleton ? styles.skeleton : ""}`}
+              onClick={() => onClick(x)}
             >
               <div className={`skeleton-bg ${styles.skeletonBg}`} />
 
@@ -89,7 +99,16 @@ export const Items = ({ items = [] }: Props) => {
               )}
 
               <div className={styles.image}>
-                <img src={x.Image} alt="image" />
+                {!isLoaded && (
+                  <div className={styles.load}></div>
+                )}
+                <img
+                  src={x.Image}
+                  alt=""
+                  loading="lazy"
+                  onLoad={() => handleImageLoaded(key)}
+                  className={`${styles.img} ${isLoaded ? styles.visible : ""}`}
+                />
               </div>
 
               <div className={styles.title}>
@@ -98,10 +117,7 @@ export const Items = ({ items = [] }: Props) => {
 
               <div className={styles.button}>
                 <div className={`skeleton-bg ${styles.skeletonBg}`} />
-                <button
-                  disabled={isSkeleton}
-                  onClick={() => onClick(x)}
-                >
+                <button disabled={isSkeleton}>
                   <h4>{x.price_rub}р</h4>
                 </button>
               </div>

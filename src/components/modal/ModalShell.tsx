@@ -19,9 +19,15 @@ export function ModalShell({
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
+
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     const raf = requestAnimationFrame(() => setOpened(true));
+
     return () => {
       window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
       cancelAnimationFrame(raf);
     };
   }, [onClose]);
@@ -54,7 +60,7 @@ export function ModalShell({
       >
         <div className={styles.inner}>
             <div className={styles.close}>
-                <button>
+                <button onClick={onClose}>
                     <CloseIcon />
                 </button>
             </div>

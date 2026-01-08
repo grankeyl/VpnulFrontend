@@ -2,12 +2,30 @@ import styles from './style.module.scss';
 
 import { ModalShell } from "../../../../components/modal/ModalShell";
 import { useState } from 'react';
+import { getImageUrl } from '../../../../utils/app';
 
-const featuresData = Array.from({ length: 4 }, (_, i) => ({
-  id: i,
-  image: '/pages/home/gift.png',
-  title: 'Speed up to 1 GB/s',
-}));
+const featuresData = [
+  {
+    id: 1,
+    image: getImageUrl('/bages/speed.svg'),
+    title: 'Speed up to 1 GB/s',
+  },
+  {
+    id: 2,
+    image: getImageUrl('/bages/device.svg'),
+    title: 'Up to 3 devices',
+  },
+  {
+    id: 3,
+    image: getImageUrl('/bages/shield.svg'),
+    title: 'Privately',
+  },
+  {
+    id: 4,
+    image: getImageUrl('/bages/fast.svg'),
+    title: 'Easy to use',
+  },
+];
 
 const methodsData = [
   { id: 'sbp', title: 'СБП' },
@@ -52,7 +70,7 @@ export function BuySubscriptionModal({
         </div>
 
         <div className={styles.features}>
-          {featuresData.map((x) => (
+          {featuresData.map((x, i) => (
             <>
             <div className={styles.item} key={x.id}>
               <div className={styles.image}>
@@ -62,7 +80,7 @@ export function BuySubscriptionModal({
                 <h4>{x.title}</h4>
               </div>
             </div>
-            {x.id !== featuresData.length - 1 && <div className={styles.border}></div>}
+            {i !== featuresData.length - 1 && <div className={styles.border}></div>}
             </>
           ))}
         </div>

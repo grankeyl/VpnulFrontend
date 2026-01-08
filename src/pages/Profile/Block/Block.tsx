@@ -2,11 +2,13 @@ import styles from './style.module.scss';
 
 import ChevroneRightIcon from "../../../icons/ChevroneRight";
 
+import { getImageUrl } from '../../../utils/app';
+
 export const Block = () => {
   return (
     <div className={styles.block}>
         <div className={styles.image}>
-            <img src="/pages/home/gift.png" alt="" />
+            <img src={getImageUrl('/bages/users.svg')} alt="" />
         </div>
         <div className={styles.context}>
             <h4>Free subscription</h4>

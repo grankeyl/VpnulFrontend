@@ -33,6 +33,9 @@
 
 .inner {
     width: 100%;
+    height: 70svh;
+    overflow-x: hidden;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -132,6 +135,7 @@
   background: rgba(25, 25, 25, 0.9);
   width: 100%;
   height: 36px;
+  min-height: 36px;
   padding: 4px;
   isolation: isolate;
   overflow: hidden;
