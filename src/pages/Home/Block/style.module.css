@@ -1,0 +1,81 @@
+.block {
+  display: flex;
+  height: 60px;
+  min-height: 60px;
+  padding: 0 18px 0 16px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 22px;
+  background: #121212;
+  position: relative;
+}
+.block .skeletonBg {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.block .image img,
+.block .context,
+.block .chevrone {
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+.block.skeleton .skeletonBg {
+  opacity: 0.35;
+}
+.block.skeleton .image img,
+.block.skeleton .context,
+.block.skeleton .chevrone {
+  opacity: 0;
+}
+.block .image {
+  width: 29px;
+  height: 29px;
+  min-width: 29px;
+  min-height: 29px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #222121;
+}
+.block .image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.block .context {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  margin-right: auto;
+}
+.block .context h4 {
+  color: #FFF;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+}
+.block .context p {
+  color: #8D8D8D;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19px;
+}
+.block .chevrone {
+  width: 21px;
+  height: 21px;
+  margin-top: -5px;
+}
+.block .chevrone svg {
+  width: 21px;
+  height: 21px;
+  fill: #FFF;
+}
+.block .chevrone svg path {
+  fill: rgba(255, 255, 255, 0.3921568627);
+}/*# sourceMappingURL=style.module.css.map */

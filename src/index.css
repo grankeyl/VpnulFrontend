@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --bottom-indent: 41px;
+    --padding-indent: 16px;
+
+    --Fills---Vibrant-Tertiary: #121212;
+    --Accents-Blue: #0091FF;
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+  font-weight: 400;
+  border: 0 solid;
+  margin: 0;
+  padding: 0;
+  scrollbar-width: none;
+  --webkit-touch-callout: none;
+}
+
+body {
+  font-family: 'SF Pro Display', sans-serif;
+  color: #fff;
+}
+
+img {
+  aspect-ratio: 1/1;
+}
+
+button {
+  transition: transform 0.2s ease-in-out;
+  transform-origin: center;
+  cursor: pointer;
+}
+
+.page {
+  animation: pageEnter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.skeleton-bg{
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.028);
+}
+
+.skeleton-bg::after{
+  content: "";
+  position: absolute;
+  inset: -20%;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.020) 25%,
+    rgba(255, 255, 255, 0.050) 45%,
+    rgba(255, 255, 255, 0.050) 55%,
+    rgba(255, 255, 255, 0.020) 75%,
+    transparent 100%
+  );
+
+  width: 140%;
+  left: -140%;
+
+  filter: blur(10px);
+  opacity: 0.95;
+
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  animation: skShimmer 1.4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes skShimmer {
+  to { transform: translate3d(210%, 0, 0); }
+}

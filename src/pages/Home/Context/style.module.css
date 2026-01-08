@@ -1,0 +1,329 @@
+.context {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.context .skeletonBg {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.context .image img,
+.context .title,
+.context .descr {
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+.context.skeleton .stars {
+  opacity: 0.2;
+}
+.context.skeleton .image {
+  width: 120px;
+  height: 120px;
+  background: #222121;
+  border-radius: 102px;
+  opacity: 0.7;
+}
+.context.skeleton .image img {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.context.skeleton .title {
+  width: 80px;
+  height: 26px;
+  background: #222121;
+  border-radius: 22px;
+  opacity: 0.7;
+}
+.context.skeleton .title .skeletonBg {
+  opacity: 1;
+}
+.context.skeleton .title h4 {
+  opacity: 0;
+}
+.context.skeleton .descr {
+  width: 140px;
+  height: 50px;
+  background: #222121;
+  border-radius: 22px;
+  opacity: 0.4;
+}
+.context.skeleton .descr .skeletonBg {
+  opacity: 1;
+}
+.context.skeleton .descr p {
+  opacity: 0;
+}
+
+.head {
+  position: relative;
+  width: 60%;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+  overflow: visible;
+}
+.head .image img {
+  width: 112px;
+  height: 135px;
+  position: relative;
+  z-index: 2;
+}
+.head .stars {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 220px;
+  transform: translate(-56%, -42%);
+  pointer-events: none;
+  z-index: 1;
+}
+.head .star {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: url("/pages/home/star.svg") center/contain no-repeat;
+  opacity: 0.55;
+  --sc: 1;
+  --dy: -18px;
+  will-change: transform, opacity;
+  animation: float 6s linear infinite, twinkle 2.5s ease-in-out infinite, drift 3.6s ease-in-out infinite alternate;
+}
+.head .star:nth-child(1) {
+  top: 6%;
+  left: 36%;
+  --sc: 0.89;
+  --dy: -22px;
+  animation-delay: -3164ms;
+  animation-duration: 3614ms, 2917ms, 2452ms;
+}
+.head .star:nth-child(2) {
+  top: 8%;
+  left: 54%;
+  --sc: 0.91;
+  --dy: -16px;
+  animation-delay: -4660ms;
+  animation-duration: 4022ms, 2096ms, 2033ms;
+}
+.head .star:nth-child(3) {
+  top: 10%;
+  left: 70%;
+  --sc: 1.08;
+  --dy: -23px;
+  animation-delay: -907ms;
+  animation-duration: 3710ms, 2444ms, 3462ms;
+}
+.head .star:nth-child(4) {
+  top: 14%;
+  left: 24%;
+  --sc: 0.96;
+  --dy: -23px;
+  animation-delay: -2435ms;
+  animation-duration: 6489ms, 1967ms, 2878ms;
+}
+.head .star:nth-child(5) {
+  top: 16%;
+  left: 44%;
+  --sc: 1.1;
+  --dy: -13px;
+  animation-delay: -3133ms;
+  animation-duration: 7319ms, 1553ms, 2986ms;
+}
+.head .star:nth-child(6) {
+  top: 18%;
+  left: 62%;
+  --sc: 0.81;
+  --dy: -23px;
+  animation-delay: -4525ms;
+  animation-duration: 3512ms, 2965ms, 3935ms;
+}
+.head .star:nth-child(7) {
+  top: 20%;
+  left: 80%;
+  --sc: 0.58;
+  --dy: -20px;
+  animation-delay: -3010ms;
+  animation-duration: 3597ms, 2452ms, 2004ms;
+}
+.head .star:nth-child(8) {
+  top: 28%;
+  left: 22%;
+  --sc: 1.02;
+  --dy: -14px;
+  animation-delay: -4266ms;
+  animation-duration: 5724ms, 2543ms, 3272ms;
+}
+.head .star:nth-child(9) {
+  top: 36%;
+  left: 16%;
+  --sc: 0.84;
+  --dy: -11px;
+  animation-delay: -907ms;
+  animation-duration: 6616ms, 1957ms, 3648ms;
+}
+.head .star:nth-child(10) {
+  top: 44%;
+  left: 26%;
+  --sc: 1.07;
+  --dy: -22px;
+  animation-delay: -3989ms;
+  animation-duration: 5350ms, 1561ms, 2084ms;
+}
+.head .star:nth-child(11) {
+  top: 52%;
+  left: 14%;
+  --sc: 1.06;
+  --dy: -21px;
+  animation-delay: -3800ms;
+  animation-duration: 5188ms, 1981ms, 1955ms;
+}
+.head .star:nth-child(12) {
+  top: 60%;
+  left: 24%;
+  --sc: 0.9;
+  --dy: -16px;
+  animation-delay: -4332ms;
+  animation-duration: 4902ms, 1727ms, 3346ms;
+}
+.head .star:nth-child(13) {
+  top: 34%;
+  left: 56%;
+  --sc: 0.97;
+  --dy: -17px;
+  animation-delay: -3811ms;
+  animation-duration: 6326ms, 2404ms, 2251ms;
+}
+.head .star:nth-child(14) {
+  top: 46%;
+  left: 62%;
+  --sc: 0.81;
+  --dy: -20px;
+  animation-delay: -735ms;
+  animation-duration: 6790ms, 1447ms, 3694ms;
+}
+.head .star:nth-child(15) {
+  top: 58%;
+  left: 68%;
+  --sc: 1.01;
+  --dy: -22px;
+  animation-delay: -3356ms;
+  animation-duration: 4518ms, 1563ms, 3206ms;
+}
+.head .star:nth-child(16) {
+  top: 30%;
+  left: 74%;
+  --sc: 1.12;
+  --dy: -23px;
+  animation-delay: -1239ms;
+  animation-duration: 4862ms, 2033ms, 2815ms;
+}
+.head .star:nth-child(17) {
+  top: 38%;
+  left: 88%;
+  --sc: 0.99;
+  --dy: -22px;
+  animation-delay: -368ms;
+  animation-duration: 6470ms, 2782ms, 3865ms;
+}
+.head .star:nth-child(18) {
+  top: 48%;
+  left: 72%;
+  --sc: 0.89;
+  --dy: -16px;
+  animation-delay: -3548ms;
+  animation-duration: 6485ms, 2640ms, 3423ms;
+}
+.head .star:nth-child(19) {
+  top: 56%;
+  left: 90%;
+  --sc: 0.6;
+  --dy: -16px;
+  animation-delay: -1265ms;
+  animation-duration: 5013ms, 2648ms, 2381ms;
+}
+.head .star:nth-child(20) {
+  top: 66%;
+  left: 80%;
+  --sc: 0.98;
+  --dy: -23px;
+  animation-delay: -1632ms;
+  animation-duration: 6479ms, 2682ms, 2006ms;
+}
+.head .star:nth-child(21) {
+  top: 78%;
+  left: 58%;
+  --sc: 1.14;
+  --dy: -18px;
+  animation-delay: -64ms;
+  animation-duration: 6344ms, 1620ms, 2365ms;
+}
+.head .star:nth-child(22) {
+  top: 74%;
+  left: 26%;
+  --sc: 0.73;
+  --dy: -17px;
+  animation-delay: -662ms;
+  animation-duration: 3560ms, 2056ms, 3623ms;
+}
+@keyframes float {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(var(--sc));
+  }
+  100% {
+    transform: translate3d(0, var(--dy), 0) rotate(360deg) scale(var(--sc));
+  }
+}
+@keyframes drift {
+  0% {
+    transform: translate3d(-3px, 2px, 0) rotate(0deg) scale(var(--sc));
+  }
+  100% {
+    transform: translate3d(3px, -2px, 0) rotate(0deg) scale(var(--sc));
+  }
+}
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.title h4 {
+  color: #FFF;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.descr {
+  text-align: center;
+  max-width: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.descr p {
+  color: #FFF;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+}/*# sourceMappingURL=style.module.css.map */

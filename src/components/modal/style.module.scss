@@ -1,0 +1,80 @@
+.modal {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+
+  width: 100%;
+  max-width: 575px;
+  max-height: 70vh;
+  min-height: 200px;
+
+  transform: translate3d(-50%, 100%, 0);
+  transition: transform 420ms cubic-bezier(.22,1,.36,1);
+
+  background: #070707;
+  border: 1px solid rgba(255,255,255,.21);
+  border-radius: 32px;
+
+  will-change: transform;
+}
+
+.modalOpen { transform: translate3d(-50%, 0, 0); }
+.modalClosing { transform: translate3d(-50%, 100%, 0); }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(0,0,0,.55);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+.overlayOpen { opacity: 1; }
+.overlayClosing { opacity: 0; }
+
+.top {
+    width: 100%;
+    height: fit-content;
+    position: fixed;
+    padding-top: 5px;
+    background: #070707;
+    padding-bottom: 6px;
+
+    .thumb {
+        width: 36px;
+        height: 5px;
+        border-radius: 30px;
+        background: #161616;
+        margin: auto;
+    }
+}
+
+.close {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(37, 37, 38, 0.32);
+    margin: auto;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 16px;
+    left: 16px;
+
+    svg {
+        width: 24px;
+        height: 24px;
+        margin-top: -5px;
+        margin-left: -4px;
+        fill: #FFF;
+        color: var(--Labels---Vibrant-Secondary, #999);
+    }
+}
+
+.inner {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}

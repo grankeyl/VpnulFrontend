@@ -1,0 +1,243 @@
+@keyframes showBlock {
+  0% {
+    opacity: 0;
+    transform: perspective(900px) translate3d(0, 22px, 0) scale(0.92) rotateX(10deg);
+    filter: blur(8px);
+  }
+  58% {
+    opacity: 1;
+    transform: perspective(900px) translate3d(0, -2px, 0) scale(1.01) rotateX(-1deg);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(900px) translate3d(0, 0, 0) scale(1) rotateX(0);
+    filter: blur(0);
+  }
+}
+@keyframes sheenSweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-140%) rotate(12deg);
+  }
+  18% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(140%) rotate(12deg);
+  }
+}
+.blocker {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 3vw, 16px);
+}
+
+.items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(6px, 1.8vw, 10px);
+  min-width: 0;
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  align-items: center;
+  justify-content: center;
+}
+.items .item,
+.items .image,
+.items .title,
+.items .button {
+  min-width: 0;
+}
+.items .item {
+  width: 100%;
+  border-radius: clamp(12px, 3.6vw, 18px);
+  background: #121212;
+  position: relative;
+  transition: transform 0.24s ease-in-out, opacity 0.15s ease-in-out;
+  cursor: pointer;
+  padding: clamp(12px, 2.6vw, 18px) clamp(10px, 2.6vw, 17px) clamp(12px, 2.2vw, 14px) clamp(10px, 2.6vw, 16px);
+  isolation: isolate;
+  container-type: inline-size;
+  font-size: clamp(10px, 4cqi, 16px);
+  opacity: 0;
+  transform: perspective(900px) translate3d(0, 22px, 0) scale(0.92) rotateX(10deg);
+  will-change: transform, opacity, filter;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  animation-name: showBlock;
+  animation-duration: 700ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+  animation-delay: var(--appear-delay, 0ms);
+  transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 150ms ease, filter 260ms ease;
+}
+@media (hover: hover) {
+  .items .item:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+}
+.items .item:active {
+  transform: translateY(-1px) scale(0.98);
+}
+.items .item .skeletonBg {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.items .item .sale,
+.items .item .image,
+.items .item .title,
+.items .item .button button {
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+.items .item.skeleton .skeletonBg {
+  opacity: 0.35;
+}
+.items .item.skeleton .sale,
+.items .item.skeleton .image,
+.items .item.skeleton .title,
+.items .item.skeleton .button button {
+  opacity: 0;
+}
+.items .item .sale {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  position: absolute;
+  top: -12px;
+  right: -2px;
+  width: clamp(55px, 5.5rem, 55px);
+  height: 55px;
+}
+.items .item .sale .bg {
+  background: linear-gradient(180deg, #6CADF2 1.81%, #126099 99.68%);
+}
+.items .item .sale .text {
+  position: absolute;
+  top: 39%;
+  left: 58%;
+  transform: translate(-50%, -50%);
+}
+.items .item .sale .text p {
+  color: #FFF;
+  font-size: 11px;
+  font-weight: 590;
+  line-height: normal;
+  transform: rotate(43deg);
+}
+.items .item .image {
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: auto;
+  display: flex;
+}
+.items .item .image img {
+  width: 100%;
+  height: 100%;
+  max-height: clamp(40px, 11vw, 55px);
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.items .item .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: clamp(6px, 2vw, 10px);
+}
+.items .item .title h4 {
+  color: #fff;
+  font-weight: 600;
+  font-size: clamp(12px, 4.2cqi, 16px);
+  line-height: 1.1;
+}
+.items .item .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: clamp(6px, 2vw, 10px);
+  position: relative;
+}
+.items .item .button button {
+  width: 100%;
+  height: clamp(34px, 9vw, 40px);
+  border-radius: 999px;
+  background: linear-gradient(0deg, #0091FF 0%, #0091FF 100%), #FFF;
+  background-blend-mode: normal;
+  box-shadow: 0 0 0.623px rgba(0, 0, 0, 0.1), 0 0.311px 2.491px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease-in-out;
+}
+.items .item .button button:active {
+  transform: scale(0.88);
+}
+.items .item .button button h4 {
+  color: #FFF;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.item:nth-child(1) {
+  --appear-delay: 0ms;
+}
+
+.item:nth-child(2) {
+  --appear-delay: 60ms;
+}
+
+.item:nth-child(3) {
+  --appear-delay: 120ms;
+}
+
+.item:nth-child(4) {
+  --appear-delay: 180ms;
+}
+
+.item:nth-child(5) {
+  --appear-delay: 240ms;
+}
+
+.item:nth-child(6) {
+  --appear-delay: 300ms;
+}
+
+.item:nth-child(7) {
+  --appear-delay: 360ms;
+}
+
+.item:nth-child(8) {
+  --appear-delay: 420ms;
+}
+
+.item:nth-child(9) {
+  --appear-delay: 480ms;
+}
+
+.item:nth-child(10) {
+  --appear-delay: 540ms;
+}
+
+.item:nth-child(11) {
+  --appear-delay: 600ms;
+}
+
+.item:nth-child(12) {
+  --appear-delay: 660ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}/*# sourceMappingURL=style.module.css.map */
