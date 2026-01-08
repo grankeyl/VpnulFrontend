@@ -9,13 +9,13 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.vpnul-frontend.entrypoints=http"
-      - "traefik.http.routers.vpnul-frontend.rule=Host('vpnul.codes')"
+      - "traefik.http.routers.vpnul-frontend.rule=Host(`vpnul.codes`)"
       - "traefik.http.middlewares.vpnul-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.middlewares.vpnul-https-redirect.redirectscheme.permanent=true"
       - "traefik.http.routers.vpnul-frontend.middlewares=vpnul-https-redirect"
 
       - "traefik.http.routers.vpnul-frontend-secure.entrypoints=https"
-      - "traefik.http.routers.vpnul-frontend-secure.rule=Host('vpnul.codes')"
+      - "traefik.http.routers.vpnul-frontend-secure.rule=Host(`vpnul.codes`)"
       - "traefik.http.routers.vpnul-frontend-secure.tls.certresolver=letsencrypt"
       - "traefik.http.routers.vpnul-frontend-secure.service=vpnul-frontend"
       - "traefik.http.services.vpnul-frontend.loadbalancer.server.port=80"
