@@ -1,8 +1,8 @@
 version: '3.9'
 
 services:
-  frontend:
-    image: frontend:latest
+  vpnul-frontend:
+    image: vpnul-frontend:latest
     build:
       context: ./
       dockerfile: Dockerfile.frontend
