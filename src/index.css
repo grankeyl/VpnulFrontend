@@ -18,6 +18,7 @@
   padding: 0;
   scrollbar-width: none;
   --webkit-touch-callout: none;
+  user-select: none;
 }
 
 body {

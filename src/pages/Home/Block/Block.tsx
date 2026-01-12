@@ -1,5 +1,7 @@
 import styles from "./style.module.scss";
+
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Icons
 import ChevroneRightIcon from "../../../icons/ChevroneRight";
@@ -15,6 +17,8 @@ export const Block = ({
   description: string;
   redirect: string;
 }) => {
+  const navigate = useNavigate();
+
   const [isSkeleton, setIsSkeleton] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -23,11 +27,16 @@ export const Block = ({
     setIsSkeleton(false);
   }
 
+  function redirectTo() {
+    navigate(redirect);
+  }
+
   return (
     <div
       className={`${styles.block} ${
         isSkeleton ? styles.skeleton : styles.reveal
       }`}
+      onClick={redirectTo}
     >
       <div className={styles.image}>
         {!imageLoaded && <div className={styles.load} />}

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import LockIcon from "../../icons/Lock";
 import TasksIcon from "../../icons/Tasks";
@@ -22,6 +23,7 @@ const pathToTab = (pathname: string): FooterTab => {
 };
 
 export const Footer = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -29,15 +31,21 @@ export const Footer = () => {
 
   const items = useMemo(
     () => [
-      { key: "vpn" as const, label: "VPN", Icon: LockIcon },
-      { key: "tasks" as const, label: "Tasks", Icon: TasksIcon },
-      { key: "profile" as const, label: "Profile", Icon: ProfileIcon },
+      { key: "vpn" as const, label: t("footer.vpn"), Icon: LockIcon },
+      { key: "tasks" as const, label: t("footer.tasks"), Icon: TasksIcon },
+      { key: "profile" as const, label: t("footer.profile"), Icon: ProfileIcon },
     ],
     []
   );
 
+  const isHide = () => {
+    if (location.pathname.startsWith('/instruction')) return true;
+    if (location.pathname.startsWith('/profile/referrals')) return true;
+    return false;
+  }
+
   return (
-    <nav className="footer" aria-label="Bottom navigation">
+    <nav className={`footer ${isHide() ? 'hide' : ''}`} aria-label="Bottom navigation">
       <div className="glass-pill" />
 
       <div className="items" role="tablist" aria-orientation="horizontal">

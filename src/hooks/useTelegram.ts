@@ -92,6 +92,10 @@ const TelegramModule = {
       WebApp.openTelegramLink(link);
     },
 
+    useTgLink(link: string) {
+      WebApp.openLink(link);
+    },
+
     async useShare(url: string, message: string) {
       const encodedUrl = encodeURIComponent(url);
       const encodedMessage = encodeURIComponent(message);

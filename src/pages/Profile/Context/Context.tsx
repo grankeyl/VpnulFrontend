@@ -1,11 +1,13 @@
 import styles from './style.module.scss';
 
 // Icons
-// import LockIcon from "../../../icons/Lock";
+import LockIcon from "../../../icons/Lock";
 
 import { useUserStore } from '../../../store/user.store';
+import { useTranslation } from 'react-i18next';
 
-export const Context = () => {
+export const Context = ({ subscribed }: { subscribed?: boolean }) => {
+  const { t } = useTranslation();
   const userData = useUserStore((s) => s.userData);
 
   return (
@@ -25,14 +27,18 @@ export const Context = () => {
         <h4>{userData?.Name}</h4>
       </div>
 
-      <div className={styles.descr}>
-        <p>not a subscriber</p>
-      </div>
+      {!subscribed && (
+        <div className={styles.descr}>
+          <p>{t('profile.context.notSubscriber')}</p>
+        </div>
+      )}
 
-      {/* <div className={`${styles.descr} ${styles.subscribed}`}>
-        <p>subscribed</p>
-        <LockIcon />
-      </div> */}
+      {subscribed && (
+        <div className={`${styles.descr} ${styles.subscribed}`}>
+          <p>{t('profile.context.subscriber')}</p>
+          <LockIcon />
+        </div>
+      )}
     </div>
   );
 };

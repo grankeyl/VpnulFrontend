@@ -1,6 +1,7 @@
 import styles from './style.module.scss';
 
 import { ModalShell } from "../../../../components/modal/ModalShell";
+import { useTranslation } from 'react-i18next';
 
 export function WithdrawModal({
   onClose,
@@ -12,37 +13,38 @@ export function WithdrawModal({
   closing?: boolean;
   onExited?: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <ModalShell onClose={onClose} closing={closing} onExited={onExited}>
       <div className={styles.inner}>
         <div className={styles.main}>
           <div className={styles.head}>
-            <p>Enter amount to withdraw</p>
+            <p>{t('referrals.modals.withdraw.main.enterAmount')}</p>
           </div>
           <div className={styles.input}>
             <div className={styles.icon}>
               <p>₽</p>
             </div>
-            <input type="text" placeholder='Amount' />
+            <input type="text" placeholder={t('referrals.modals.withdraw.main.amount')} />
           </div>
           <div className={styles.info}>
-            <p>You will receive:</p>
+            <p>{t('referrals.modals.withdraw.main.info')}</p>
             <p>≈20,12$</p>
           </div>
         </div>
 
         <div className={styles.context}>
           <div className={styles.item}>
-            <h4>Withdrawals are processed via <span>@CryptoBot.</span></h4>
+            <h4>{t('referrals.modals.withdraw.context.processed')} <span>@CryptoBot.</span></h4>
           </div>
           <div className={styles.item}>
-            <h4>You will receive $USDT in your balance. Make sure you have opened the <span>@CryptoBot.</span></h4>
+            <h4>{t('referrals.modals.withdraw.context.willReceive')} <span>@CryptoBot.</span></h4>
           </div>
         </div>
 
         <div className={styles.button}>
           <button>
-            <h4>Withdraw 20,12$</h4>
+            <h4>{t('referrals.modals.withdraw.button', { amount: 23.5 })}</h4>
           </button>
         </div>
       </div>

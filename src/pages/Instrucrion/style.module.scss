@@ -1,0 +1,15 @@
+.instruction {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    gap: 22px;
+    height: 100vh;
+    width: 100%;
+    max-width: 500px;
+    padding: 0 clamp(8px, 3.2vw, var(--padding-indent));
+    padding-top: calc(
+        var(--tg-safe-area-inset-top, -15px) + 72px
+    );
+    padding-bottom: calc(var(--bottom-indent) * 3);
+}

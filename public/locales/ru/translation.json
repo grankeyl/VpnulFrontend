@@ -1,0 +1,176 @@
+{
+    "time": {
+        "hours": ["час", "часа", "часов"],
+        "days": ["день", "дня", "дней"],
+        "weeks": ["неделя", "недели", "недель"],
+        "months": ["месяц", "месяца", "месяцев"],
+        "years": ["год", "года", "лет"]
+    },
+    "friends": ["друга", "друга", "друзей"],
+
+    "toasts": {
+        "copyLink": {
+            "title": "Ссылка скопирована",
+            "description": "Ты можешь поделиться ей с друзьями"
+        },
+        "taskCompleted": {
+            "title": "Задание выполнено",
+            "description": "Награда успешно начислена на твой аккаунт"
+        }
+    },
+
+    "footer": {
+        "vpn": "VPN",
+        "tasks": "Задания",
+        "profile": "Профиль"
+    },
+    "home": {
+        "context": {
+            "title": "VPN",
+            "description": "Раскройте свою цифровую свободу здесь"
+        },
+        "block": {
+            "title": "Бесплатная подписка",
+            "description": "За приглашение друга"
+        },
+        "modals": {
+            "buySubscription": {
+                "description": "VPN-подписка",
+                "features": {
+                    "speed": "Скорость в 1 ГБ/с",
+                    "device": "До 3-х устройств",
+                    "shield": "Приватность",
+                    "fast": "Быстрое подключение"
+                },
+                "methods": {
+                    "sbp": "СБП",
+                    "send": "@send",
+                    "stars": "Stars",
+                    "balance": "Баланс"
+                },
+                "buy": "Купить за {{price}} руб."
+            },
+            "activeSubscription": {
+                "context": {
+                    "title": "Подписка активирована",
+                    "description": "Теперь ты можешь подключиться к VPN!"
+                },
+                "footer": {
+                    "text": "Следуй простым инструкциям для подключения",
+                    "buy": "Перейти к инструкции"
+                }
+            }
+        }
+    },
+    "tasks": {
+        "context": {
+            "title": "Задания",
+            "description": "Задания для получения бонусов"
+        },
+        "block": {
+            "subscribe": "Подписаться на {{name}}",
+            "subscribeTo": "{{time}} подписки",
+            "done": "Выполнено"
+        },
+        "blockInfo": {
+            "title": "Двойная подписка",
+            "description": "За любую первую покупку",
+            "done": "Выполнено"
+        },
+        "items": {
+            "invite": "Пригласить {{friends}}",
+            "subscribeTo": "{{time}} подписки",
+            "done": "Выполнено"
+        },
+        "footer": {
+            "youInvited": "Ты пригласил {{friends}}"
+        },
+        "modals": {
+            "activeSubscription": {
+                "context": {
+                    "title": "Подписка активирована",
+                    "description": "Задание выполнено, ты получил {{time}} подписки"
+                }
+            }
+        }
+    },
+    "profile": {
+        "context": {
+            "notSubscriber": "нет подписки",
+            "subscriber": "подписан"
+        },
+        "plan": {
+            "description": "твоя подписка",
+            "buttons": {
+                "add": "Добавить",
+                "connect": "Подключить"
+            },
+            "devices": "{{devices}} из {{limit}} устройств доступно"
+        },
+        "funcs": {
+            "howToUse": "Как подключиться?",
+            "support": "Поддержка"
+        },
+        "block": {
+            "title": "Реферальная программа",
+            "description": "Получать 30% от друзей"
+        },
+        "empty": {
+            "description": "Ничего нет :(",
+            "choosePlan": "Выбрать план"
+        }
+    },
+    "referrals": {
+        "context": {
+            "title": "Реферальная программа",
+            "description": "Зарабатывай 30% от покупок друзей"
+        },
+        "link": {
+            "title": "Твоя реферальная ссылка",
+            "share": "Поделиться"
+        },
+        "balance": {
+            "description": "твой баланс",
+            "withdraw": "Вывести",
+            "minWithdraw": "Минимальная сумма для вывода 1000р"
+        },
+        "items": {
+            "head": {
+                "title": "Рефералы"
+            }
+        },
+        "modals": {
+            "withdraw": {
+                "main": {
+                    "enterAmount": "Введи сумму для вывода",
+                    "amount": "Сумма",
+                    "info": "Ты получишь:"
+                },
+                "context": {
+                    "processed": "Вывод средств осуществляется через",
+                    "willReceive": "Ты получишь $USDT на свой баланс. Убедись, что ты открыл"
+                },
+                "button": "Вывести {{amount}}$"
+            }
+        }
+    },
+    "instruction": {
+        "context": {
+            "title": "Инструкция",
+            "description": "Узнай как подключиться для доступа к платформе"
+        },
+        "info": {
+            "first": {
+                "title": "Скачай приложение",
+                "description": "Используй “iOS Russia” для России",
+                "description1": "Это необходимо для подключения VPN",
+                "download": "Скачать"
+            },
+            "second": {
+                "title": "Подключись",
+                "description": "Нажми кнопку “Подключить” в профиле",
+                "profile": "Профиль"
+            }
+        }
+    }
+}

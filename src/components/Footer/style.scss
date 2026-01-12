@@ -10,12 +10,19 @@
   bottom: var(--bottom-indent);
   left: 50%;
   padding: 4px;
-  transform: translateX(-50%);
+  transform: translateY(0) translateX(-50%) scale(1);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.07);
   -webkit-backdrop-filter: blur(12.8px);
   backdrop-filter: blur(12.8px);
   isolation: isolate;
+  transition: opacity 0.18s ease-in-out, transform 0.18s ease-in-out;
+
+  &.hide {
+    opacity: 0;
+    transform: translateY(100%) translateX(-50%) scale(0.8);
+    pointer-events: none;
+  }
 }
 
 .footer .items {

@@ -2,6 +2,9 @@ import styles from "./style.module.scss";
 
 import { useEffect, useMemo, useState } from "react";
 import { useModal } from "../../../components/modal/ModalProvider";
+import { formatTimeLocalized } from "../../../utils/app";
+import { useTranslation } from "react-i18next";
+// import { useUserStore } from "../../../store/user.store";
 
 export type SubItem = any;
 
@@ -22,10 +25,10 @@ export const Items = ({
   loading = false,
   items = [],
 }: Props) => {
+  const { t } = useTranslation();
   const { open } = useModal();
+  
   const [isSkeleton, setIsSkeleton] = useState(loading);
-
-  // состояние загрузки картинок
   const [loadedImages, setLoadedImages] = useState<Record<string | number, boolean>>({});
 
   useEffect(() => {
@@ -39,7 +42,9 @@ export const Items = ({
   }, [items, isSkeleton]);
 
   function onClick(item: SubItem) {
-    open("buySubscription", { item });
+    open("buySubscription", { 
+      data: item,
+    });
   }
 
   function handleImageLoaded(id: string | number) {
@@ -112,7 +117,7 @@ export const Items = ({
               </div>
 
               <div className={styles.title}>
-                <h4>{x.hours} hours</h4>
+                <h4>{formatTimeLocalized(x.hours, t)}</h4>
               </div>
 
               <div className={styles.button}>

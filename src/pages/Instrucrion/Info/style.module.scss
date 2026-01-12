@@ -1,0 +1,218 @@
+.blocks {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  gap: 14px;
+
+  .block {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 14px 16px;
+    gap: 12px;
+    border-radius: 22px;
+    background: #121212;
+
+    .context {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 8px;
+      margin-bottom: 6px;
+
+      .title {
+        display: flex;
+        margin-top: 2px;
+        width: 100%;
+        gap: 10px;
+
+        h4 {
+          color: #FFF;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 22px;
+        }
+
+        p {
+          color: #FFF;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 19px;
+          margin-top: 2px;
+        }
+      }
+
+      .descr {
+        display: flex;
+
+        p {
+          color: #858588;
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 16px;
+        }
+      }
+    }
+
+    .buttons {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+
+      button {
+        width: 100%;
+        height: 46px;
+        border-radius: 1000px;
+        background: linear-gradient(0deg, #0091FF 0%, #0091FF 100%), linear-gradient(0deg, #999 0%, #999 100%), linear-gradient(0deg, #FFF 0%, #FFF 100%), #FFF;
+        background-blend-mode: plus-darker, overlay, saturation, normal;
+        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.10), 0 1px 8px 0 rgba(0, 0, 0, 0.12);
+        transition: transform 0.2s ease-in-out;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2px;
+
+        &:active {
+            transform: scale(0.95);
+        }
+
+        h4 {
+          color: #FFF;
+          font-size: 16px;
+          font-weight: 510;
+          line-height: normal;
+        }
+
+        svg {
+          width: 21px;
+          height: 21px;
+          margin-top: -4px;
+          margin-left: -6px;
+
+          path {
+            fill: #FFF;
+          }
+        }
+      }
+    }
+  }
+
+  .block2 {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    position: relative;
+    padding: 14px 16px;
+    gap: 12px;
+    border-radius: 22px;
+    background: #121212;
+
+    .context {
+      display: flex;
+      flex-direction: column;
+      width: fit-content;
+      gap: 8px;
+      margin-bottom: 6px;
+
+      .title {
+        display: flex;
+        margin-top: 2px;
+        width: 100%;
+        gap: 10px;
+
+        h4 {
+          color: #FFF;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 22px;
+        }
+
+        p {
+          color: #FFF;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 19px;
+          margin-top: 2px;
+        }
+      }
+
+      .descr {
+        display: flex;
+
+        p {
+          color: #858588;
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 16px;
+        }
+      }
+
+      .button {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 9px;
+        margin-top: 12px;
+
+        button {
+          width: 100%;
+          height: 46px;
+          border-radius: 1000px;
+          background: linear-gradient(0deg, #0091FF 0%, #0091FF 100%), linear-gradient(0deg, #999 0%, #999 100%), linear-gradient(0deg, #FFF 0%, #FFF 100%), #FFF;
+          background-blend-mode: plus-darker, overlay, saturation, normal;
+          box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.10), 0 1px 8px 0 rgba(0, 0, 0, 0.12);
+          transition: transform 0.2s ease-in-out;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 2px;
+
+          &:active {
+              transform: scale(0.95);
+          }
+
+          h4 {
+            color: #FFF;
+            font-size: 16px;
+            font-weight: 510;
+            line-height: normal;
+          }
+
+          svg {
+            width: 21px;
+            height: 21px;
+            margin-top: -4px;
+            margin-left: -6px;
+
+            path {
+              fill: #FFF;
+            }
+          }
+        }
+      }
+    }
+
+    .image {
+      width: fit-content;
+      height: 118px;
+      z-index: 0;
+      margin-left: auto;
+
+      img {
+        width: 157px;
+        height: 118px;
+        object-fit: contain;
+        opacity: 1;
+        transition: opacity .25s ease;
+      }
+    }
+  }
+}

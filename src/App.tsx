@@ -9,6 +9,8 @@ import { Home } from './pages/Home/Home';
 import { Tasks } from './pages/Tasks/Tasks';
 import { Profile } from './pages/Profile/Profile';
 import { Referrals } from './pages/Referrals/Referrals';
+import { Instruction } from './pages/Instrucrion/Instrucrion';
+import { ToastProvider } from './components/Toast/ToastContext';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Load } from './components/Load/Load';
@@ -16,14 +18,16 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer/Footer';
 import { ModalProvider } from "./components/modal/ModalProvider";
 
-import { BuySubscriptionModal } from "./pages/Home/Modals/BuySubscription/BuySubscriptionModal";
+import { BuySubscriptionModal } from "./pages/Modals/BuySubscription/BuySubscriptionModal";
 import { WithdrawModal } from './pages/Referrals/Modals/Withdraw/Withdraw';
+import { ActiveSubscription } from './pages/Modals/ActiveSubscription/ActiveSubscription';
 
 import { userApi } from "./api";
 import { useUserStore } from './store/user.store';
 
 const registry = {
   buySubscription: BuySubscriptionModal,
+  activeSubscription: ActiveSubscription,
   withdraw: WithdrawModal,
 } as const;
 
@@ -32,6 +36,7 @@ function App() {
 
   const setUserData = useUserStore((s) => s.setUserData);
   const setUserDataMeta = useUserStore((s) => s.setUserDataMeta);
+  const setSubscriptionData = useUserStore((s) => s.setSubscriptionData);
 
   const auth = async () => {
     const initDataRaw = TelegramModule.initDataRaw() as any;
@@ -41,6 +46,7 @@ function App() {
 
     setUserData({ ...init.user });
     setUserDataMeta({ ...init.meta });
+    setSubscriptionData({ ...init.subscription });
 
     TelegramModule.readyMiniApp();
 
@@ -65,19 +71,22 @@ function App() {
   return (
     <BrowserRouter>
       <ModalProvider registry={registry}>
-        <div className="fonts-loaded h-screen w-full bg-black">
-          <div className="w-full max-w-xl h-screen relative overflow-hidden flex flex-col justify-center items-center bg-black m-auto">
-            <Header />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/tasks" element={<Tasks />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/profile/referrals" element={<Referrals />} />
-              <Route path="/w" element={<div style={{ color: "white", padding: 24 }}>Tasks page</div>} />
-            </Routes>
-            <Footer />
+        <ToastProvider>
+          <div className="fonts-loaded h-screen w-full bg-black">
+            <div className="w-full max-w-xl h-screen relative overflow-hidden flex flex-col justify-center items-center bg-black m-auto">
+              <Header />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/tasks" element={<Tasks />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/referrals" element={<Referrals />} />
+                <Route path="/instruction" element={<Instruction />} />
+                <Route path="/w" element={<div style={{ color: "white", padding: 24 }}>Tasks page</div>} />
+              </Routes>
+              <Footer />
+            </div>
           </div>
-        </div>
+        </ToastProvider>
       </ModalProvider>
     </BrowserRouter>
   )

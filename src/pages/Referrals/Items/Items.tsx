@@ -1,20 +1,26 @@
 import styles from './style.module.scss';
 
-const data = Array.from({ length: 4 }, (_, i) => ({
-  id: i,
-  image: '/pages/home/gift.png',
-  name: 'Grankeyl',
-  date: '20 hours ago',
-}));
+import { useUserStore } from '../../../store/user.store';
+import { useTranslation } from 'react-i18next';
+
+// const data = Array.from({ length: 4 }, (_, i) => ({
+//   id: i,
+//   image: '/pages/home/gift.png',
+//   name: 'Grankeyl',
+//   date: '20 hours ago',
+// }));
 
 export const Items = () => {
+  const { t } = useTranslation();
+  const userDataMeta = useUserStore((s) => s.userDataMeta);
+
   return (
     <div className={styles.items}>
       <div className={styles.head}>
-        <h4>Referrals</h4>
-        <p>140</p>
+        <h4>{t('referrals.items.head.title')}</h4>
+        <p>{userDataMeta?.ref_count}</p>
       </div>
-      <div className={styles.list}>
+      {/* <div className={styles.list}>
           {data.map((x) => (
             <>
             <div className={styles.item} key={x.id}>
@@ -34,7 +40,7 @@ export const Items = () => {
             {x.id !== data.length - 1 && <div className={styles.border}></div>}
             </>
           ))}
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,10 +1,13 @@
 import styles from './style.module.scss';
 
 import { Lottie } from '../../../components/Lottie/Lottie';
+import { useTranslation } from 'react-i18next';
 
 import StickerAnimation from '../../../assets/tasks/sticker.json';
 
 export const Context = () => {
+  const { t } = useTranslation();
+
   return (
     <div className={styles.context}>
       <div className={styles.head}>
@@ -22,11 +25,11 @@ export const Context = () => {
       </div>
 
       <div className={styles.title}>
-        <h4>Tasks</h4>
+        <h4>{t('tasks.context.title')}</h4>
       </div>
 
       <div className={styles.descr}>
-        <p>Earn free bonuses for simple actions</p>
+        <p>{t('tasks.context.description')}</p>
       </div>
     </div>
   );
