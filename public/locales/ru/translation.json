@@ -27,11 +27,14 @@
     "home": {
         "context": {
             "title": "VPN",
-            "description": "Раскройте свою цифровую свободу здесь"
+            "description": "Разблокируй свою цифровую свободу"
         },
         "block": {
             "title": "Бесплатная подписка",
             "description": "За приглашение друга"
+        },
+        "items": {
+            "popular": "популяр."
         },
         "modals": {
             "buySubscription": {
@@ -65,7 +68,7 @@
     "tasks": {
         "context": {
             "title": "Задания",
-            "description": "Задания для получения бонусов"
+            "description": "Получай бонусы за простые задания"
         },
         "block": {
             "subscribe": "Подписаться на {{name}}",
@@ -113,7 +116,7 @@
         },
         "block": {
             "title": "Реферальная программа",
-            "description": "Получать 30% от друзей"
+            "description": "30% за покупки друзей"
         },
         "empty": {
             "description": "Ничего нет :(",
@@ -157,7 +160,7 @@
     "instruction": {
         "context": {
             "title": "Инструкция",
-            "description": "Узнай как подключиться для доступа к платформе"
+            "description": "Узнай как подключиться к доступным платформам"
         },
         "info": {
             "first": {

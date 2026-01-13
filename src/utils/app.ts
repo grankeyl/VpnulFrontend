@@ -25,29 +25,33 @@ export function inviteFriend(code: string) {
 export function formatTimeLocalized(hours: number, t: TFunction): string {
   if (hours < 0) throw new Error("0 hours");
 
-  const HOURS_IN_DAY = 24;
-  const DAYS_IN_WEEK = 7;
-  const DAYS_IN_MONTH = 30;
-  const DAYS_IN_YEAR = 365;
+  const DAY = 24;
+  const WEEK = 168;
+  const MONTH = 720;
+  const YEAR = 8640;
 
-  const days = hours / HOURS_IN_DAY;
-
-  if (days < 1) {
-    const h = Math.floor(hours);
+  if (hours < DAY) {
+    const h = Math.round(hours);
     return `${h} ${declensionLocalized(h, t, 'time.hours')}`;
-  } else if (days < DAYS_IN_WEEK) {
-    const d = Math.floor(days);
-    return `${d} ${declensionLocalized(d, t, 'time.days')}`;
-  } else if (days < DAYS_IN_MONTH) {
-    const w = Math.floor(days / DAYS_IN_WEEK);
-    return `${w} ${declensionLocalized(w, t, 'time.weeks')}`;
-  } else if (days < DAYS_IN_YEAR) {
-    const m = Math.floor(days / DAYS_IN_MONTH);
-    return `${m} ${declensionLocalized(m, t, 'time.months')}`;
-  } else {
-    const y = Math.floor(days / DAYS_IN_YEAR);
-    return `${y} ${declensionLocalized(y, t, 'time.years')}`;
   }
+
+  if (hours < WEEK) {
+    const d = Math.round(hours / DAY);
+    return `${d} ${declensionLocalized(d, t, 'time.days')}`;
+  }
+
+  if (hours < MONTH) {
+    const w = Math.round(hours / WEEK);
+    return `${w} ${declensionLocalized(w, t, 'time.weeks')}`;
+  }
+
+  if (hours < YEAR) {
+    const m = Math.round(hours / MONTH);
+    return `${m} ${declensionLocalized(m, t, 'time.months')}`;
+  }
+
+  const y = Math.round(hours / YEAR);
+  return `${y} ${declensionLocalized(y, t, 'time.years')}`;
 }
 
 export function formatDaysOrHoursLocalized(hours: number, t: TFunction): string {

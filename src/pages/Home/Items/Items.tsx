@@ -69,7 +69,7 @@ export const Items = ({
             >
               <div className={`skeleton-bg ${styles.skeletonBg}`} />
 
-              {Boolean(x.Sale) && (
+              {(Boolean(x.Sale) || i === 2) && (
                 <div className={styles.sale}>
                   <div className={styles.bg} />
                   <svg
@@ -98,7 +98,11 @@ export const Items = ({
                     </defs>
                   </svg>
                   <div className={styles.text}>
-                    <p>-{x.Sale}%</p>
+                    {x.Sale ? (
+                      <p>-{x.Sale}%</p>
+                    ) : i === 2 ? (
+                      <p>{t('home.items.popular')}</p>
+                    ) : null}
                   </div>
                 </div>
               )}

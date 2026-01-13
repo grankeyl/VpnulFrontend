@@ -7,7 +7,7 @@
   height: 58px;
   border-radius: 60px;
   position: fixed;
-  bottom: var(--bottom-indent);
+  bottom: calc(var(--bottom-indent) - 12px);
   left: 50%;
   padding: 4px;
   transform: translateY(0) translateX(-50%) scale(1);
@@ -46,8 +46,10 @@
   border-radius: 92px;
   position: relative;
   transition: background 0.2s ease-in-out;
+  overflow: visible;
 
   svg { 
+    overflow: visible;
     width: 20px; height: 20px; 
     path { 
       fill: #FFF; 
