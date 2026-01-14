@@ -4,7 +4,9 @@ import ChevroneRightIcon from "../../../icons/ChevroneRight";
 
 import DoneIcon from "../../../icons/Done";
 
-import { formatTimeLocalized, getImageUrl, inviteFriend, inviteFriendsLocalized } from '../../../utils/app';
+import * as taskApi from "../../../api/task/task.api";
+
+import { formatTimeLocalized, getImageUrl, inviteFriendsLocalized } from '../../../utils/app';
 import { useUserStore } from '../../../store/user.store';
 import { useTranslation } from "react-i18next";
 import { showSuccessToast } from "../../../components/Toast/toastManager";
@@ -20,6 +22,7 @@ type TaskItem = {
     TaskImage: string;
     TaskNeedFriends: number;
   };
+  user_status?: string;
   loading?: boolean;
 };
 
@@ -37,7 +40,6 @@ export const Items: React.FC<ItemsProps> = ({
   openSubscription,
 }) => {
   const { t } = useTranslation();
-  const userData = useUserStore((s) => s.userData);
   const userDataMeta = useUserStore((s) => s.userDataMeta);
 
   const refCount = userDataMeta?.ref_count || 0;
@@ -57,19 +59,32 @@ export const Items: React.FC<ItemsProps> = ({
   const safeTasks = Array.isArray(tasks) ? tasks : [];
 
   function onClick(x: TaskItem) {
-    if (x.loading) return;
+    if (!x || x.loading || x.user_status === 'claimed') return;
     setTasks?.(prev => prev.map(t => t.id === x.id ? { ...t, loading: true } : t));
 
     if (x.type && x.type === 'invite') {
-      inviteFriend(userData?.Code);
-      openSubscription?.('item', x.hours);
+      if (x.user_status === 'claimed') { return; }
+      if (x.user_status === 'ready_to_claim') {
+        claim(x.id);
+      } else {
+        setTasks?.(prev => prev.map(t => t.id === x.id ? { ...t, loading: false } : t));
+      }
+    }
+  }
+
+  async function claim(id: any) {
+    if (id) {
+      const res = await taskApi.claim(id);
+      if (!res.ok) return;
+
+      openSubscription?.('item', res.data.amount);
       showSuccessToast(
         <DoneIcon />,
         t('toasts.taskCompleted.title'),
         t('toasts.taskCompleted.description')
       );
       shootConfetti();
-      setTasks?.(prev => prev.map(t => t.id === x.id ? { ...t, loading: false } : t));
+      setTasks?.(prev => prev.map(t => t.id === res.data.task_id ? { ...t, loading: false, user_status: 'claimed' } : t));
     }
   }
 
@@ -77,7 +92,8 @@ export const Items: React.FC<ItemsProps> = ({
     <div className={`${styles.blocker} ${loading ? styles.skeleton : ""}`}>
       <div className={styles.items}>
         {safeTasks.map((x, i) => {
-          const isDone = refCount >= x?.config?.TaskNeedFriends;
+          const isDone = x?.user_status === 'claimed';
+          const isClaiming = x?.user_status === 'ready_to_claim';
           const isVisible = visibleItems.includes(x.id);
 
           return (
@@ -98,7 +114,11 @@ export const Items: React.FC<ItemsProps> = ({
 
                 <div className={styles.info}>
                   {isDone ? (
-                    <div className={styles.done}><p>{t('tasks.items.done')}</p></div>
+                    <div className={styles.done}>
+                      <DoneIcon />
+                    </div>
+                  ) : isClaiming ? (
+                    <div className={styles.claiming}><p>{t('tasks.items.claim')}</p></div>
                   ) : x.loading ? (
                     <div className={styles.process}>
                       <div className={styles.load}></div>

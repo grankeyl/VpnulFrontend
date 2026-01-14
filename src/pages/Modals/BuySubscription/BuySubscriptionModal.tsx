@@ -1,10 +1,18 @@
 import styles from './style.module.scss';
 
+import * as userApi from "../../../api/user/user.api";
+import * as paymentApi from "../../../api/payment/payment.api";
+
+import CloseIcon from "../../../icons/Close";
+
 import { ModalShell } from "../../../components/modal/ModalShell";
 import { useState } from 'react';
 import { formatTimeLocalized, getImageUrl } from '../../../utils/app';
 import { useTranslation } from 'react-i18next';
 import { useUserStore } from '../../../store/user.store';
+import { showErrorToast } from '../../../components/Toast/toastManager';
+
+import TelegramModule from '../../../hooks/useTelegram';
 
 export function BuySubscriptionModal({
   onClose,
@@ -20,7 +28,10 @@ export function BuySubscriptionModal({
 }) {
   const userData = useUserStore((s) => s.userData);
   const setUserData = useUserStore((s) => s.setUserData);
+  const setSubscriptionData = useUserStore((s) => s.setSubscriptionData);
+
   const { t } = useTranslation();
+  const [buyButtonLoading, setBuyButtonLoading] = useState(false);
   const featuresData = [
     {
       id: 1,
@@ -47,7 +58,7 @@ export function BuySubscriptionModal({
     { id: 'sbp', title: t('home.modals.buySubscription.methods.sbp') },
     { id: 'send', title: t('home.modals.buySubscription.methods.send') },
     { id: 'stars', title: t('home.modals.buySubscription.methods.stars') },
-    { id: 'balance', title: t('home.modals.buySubscription.methods.balance') }
+    { id: 'balance', title: t('home.modals.buySubscription.methods.balance'), soon: userData?.RSBalance < data.price_rub }
   ];
   const [methodActive, setMethodActive] = useState(methodsData[0].id);
 
@@ -55,10 +66,86 @@ export function BuySubscriptionModal({
     setMethodActive(id);
   };
 
-  const handleBuy = () => {
+  const addSubscription = async () => {
+    const initDataRaw = TelegramModule.initDataRaw() as any;
+
+    const init = await userApi.init(initDataRaw);
+    console.log(init);
+    if (!init) return;
+    if (!init.subscription) return;
+
+    setSubscriptionData({ ...init.subscription });
+  }
+
+  function subscribeActivation() {
+    setBuyButtonLoading(false);
     onClose();
-    setUserData({ ...userData, SubUUID: "213", SubActivated: true });
-  };
+    addSubscription();
+    setUserData({ ...userData, SubActivated: true });
+  }
+
+  async function createPayment() {
+    setBuyButtonLoading(true);
+    const res = await paymentApi.create(data.ID);
+    if (!res.ok) {
+      setBuyButtonLoading(false);
+      return;
+    };
+    if (res.pay_url) {
+      TelegramModule.useLink(res.pay_url);
+      const sse = paymentApi.subscribeToPayment(res.payment_id, (data) => {
+        if (data.status === "paid") {
+          sse.close();
+          subscribeActivation();
+          return true;
+        }
+      });
+    }
+  }
+
+  async function createPaymentStars() {
+    setBuyButtonLoading(true);
+    const res = await paymentApi.createStars(data.ID);
+    if (!res.ok) {
+      setBuyButtonLoading(false);
+      return;
+    };
+    if (res.pay_url) {
+      TelegramModule.useLink(res.pay_url);
+      const sse = paymentApi.subscribeToPayment(res.payment_id, (data) => {
+        if (data.status === "paid") {
+          sse.close();
+          subscribeActivation();
+          return true;
+        }
+      });
+    }
+  }
+
+  async function createPaymentRSBalance() {
+    setBuyButtonLoading(true);
+    const res = await paymentApi.createRSBalance(data.ID);
+    
+    if (!res.ok) {
+      setBuyButtonLoading(false);
+      showErrorToast(
+        <CloseIcon />,
+        t('toasts.payment.error.title'),
+        res.error
+      );
+      return;
+    };
+    if (res.ok) {
+      subscribeActivation();
+      return;
+    }
+  }
+
+  function handleBuy() {
+    if (methodActive === 'stars') createPaymentStars();
+    if (methodActive === 'send') createPayment();
+    if (methodActive === 'balance') createPaymentRSBalance();
+  }
 
   return (
     <ModalShell onClose={onClose} closing={closing} onExited={onExited}>
@@ -99,7 +186,7 @@ export function BuySubscriptionModal({
           {methodsData.map((x) => (
             <div
               key={x.id}
-              className={`${styles.item} ${x.id === methodActive ? styles.active : ''}`}
+              className={`${styles.item} ${x.id === methodActive ? styles.active : ''} ${x.soon ? styles.soon : ''}`}
               onClick={() => handleMethodActive(x.id)}
             >
               <div className={styles.text}>
@@ -110,9 +197,17 @@ export function BuySubscriptionModal({
         </div>
 
         <div className={styles.buy}>
-          <button onClick={handleBuy}>
-            <h4>{t('home.modals.buySubscription.buy', { price: 139 })}</h4>
-          </button>
+          {buyButtonLoading ? (
+            <button className={styles.loading} disabled>
+              <div className={styles.load}></div>
+            </button>
+          ) : (
+            <button onClick={handleBuy}>
+              <h4>
+                {t('home.modals.buySubscription.buy', { price: data?.price_rub })}
+              </h4>
+            </button>
+          )}
         </div>
       </div>
     </ModalShell>

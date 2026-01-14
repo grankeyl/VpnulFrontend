@@ -4,10 +4,13 @@ import MinusIcon from "../../../icons/Minus";
 
 import { useModal } from '../../../components/modal/ModalProvider';
 import { useTranslation } from 'react-i18next';
+import { useUserStore } from '../../../store/user.store';
 
 export const Balance = () => {
   const { t } = useTranslation();
   const { open } = useModal();
+
+  const userData = useUserStore((s) => s.userData);
 
   function onClick(item: any) {
     open("withdraw", { item });
@@ -18,7 +21,7 @@ export const Balance = () => {
       <div className={styles.balance}>
         <div className={styles.context}>
           <div className={styles.value}>
-            <h4>324р</h4>
+            <h4>{userData?.RSBalance || 0}р</h4>
           </div>
         </div>
 

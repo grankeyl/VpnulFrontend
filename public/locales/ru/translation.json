@@ -16,6 +16,11 @@
         "taskCompleted": {
             "title": "Задание выполнено",
             "description": "Награда успешно начислена на твой аккаунт"
+        },
+        "payment": {
+            "error": {
+                "title": "Ошибка"
+            }
         }
     },
 
@@ -40,9 +45,9 @@
             "buySubscription": {
                 "description": "VPN-подписка",
                 "features": {
-                    "speed": "Скорость в 1 ГБ/с",
+                    "speed": "Скорость до 1ГБ/с",
                     "device": "До 3-х устройств",
-                    "shield": "Приватность",
+                    "shield": "Приватно",
                     "fast": "Быстрое подключение"
                 },
                 "methods": {
@@ -73,17 +78,20 @@
         "block": {
             "subscribe": "Подписаться на {{name}}",
             "subscribeTo": "{{time}} подписки",
-            "done": "Выполнено"
+            "done": "Выполнено",
+            "claim": "Забрать"
         },
         "blockInfo": {
             "title": "Двойная подписка",
             "description": "За любую первую покупку",
-            "done": "Выполнено"
+            "done": "Выполнено",
+            "claim": "Забрать"
         },
         "items": {
             "invite": "Пригласить {{friends}}",
             "subscribeTo": "{{time}} подписки",
-            "done": "Выполнено"
+            "done": "Выполнено",
+            "claim": "Забрать"
         },
         "footer": {
             "youInvited": "Ты пригласил {{friends}}"

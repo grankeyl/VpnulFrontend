@@ -12,7 +12,7 @@ import { Referrals } from './pages/Referrals/Referrals';
 import { Instruction } from './pages/Instrucrion/Instrucrion';
 import { ToastProvider } from './components/Toast/ToastContext';
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Load } from './components/Load/Load';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer/Footer';
@@ -32,6 +32,8 @@ const registry = {
 } as const;
 
 function App() {
+  const navigate = useNavigate();
+
   const [mounted, setMounted] = useState(false);
 
   const setUserData = useUserStore((s) => s.setUserData);
@@ -40,6 +42,7 @@ function App() {
 
   const auth = async () => {
     const initDataRaw = TelegramModule.initDataRaw() as any;
+    const initData = TelegramModule.initData() as any;
 
     const init = await userApi.init(initDataRaw);
     if (!init) return;
@@ -48,12 +51,34 @@ function App() {
     setUserDataMeta({ ...init.meta });
     setSubscriptionData({ ...init.subscription });
 
+    await initStartApp(initData.start_param);
+    
     TelegramModule.readyMiniApp();
 
     setTimeout(() => {
       setMounted(true);
     }, 300);
   };
+
+  function miniAppTransport(dtx: any) {
+    if (!dtx || dtx === "debug") return;
+    if (dtx === "instruction") { navigate("/instruction"); return; }
+    if (dtx === "instruction") { navigate("/instruction"); return; }
+    if (dtx === "instruction") { navigate("/instruction"); return; }
+    if (dtx === "instruction") { navigate("/instruction"); return; }
+    if (dtx === "instruction") { navigate("/instruction"); return; }
+  }
+
+  async function initStartApp(startParam?: string) {
+    if (!startParam) return;
+    const [, startAppType = ""] = (startParam ?? "").split("_");
+    switch (startAppType) {
+      case "opener":
+        break;
+      default:
+        miniAppTransport(startParam);
+    }
+  }
 
   useEffect(() => {
     auth();
@@ -69,7 +94,6 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
       <ModalProvider registry={registry}>
         <ToastProvider>
           <div className="fonts-loaded h-screen w-full bg-black">
@@ -88,7 +112,6 @@ function App() {
           </div>
         </ToastProvider>
       </ModalProvider>
-    </BrowserRouter>
   )
 }
 

@@ -5,10 +5,7 @@ import DoneIcon from "../../../icons/Done";
 
 import { getImageUrl } from '../../../utils/app';
 import { useTranslation } from 'react-i18next';
-import { showSuccessToast } from '../../../components/Toast/toastManager';
-import { shootConfetti } from '../../../utils/confetti';
-
-import TelegramModule from '../../../hooks/useTelegram';
+import { useNavigate } from 'react-router-dom';
 
 type BlockInfoProps = {
   id: number;
@@ -30,6 +27,7 @@ export const BlockInfo = ({
   task,
   openSubscription,
 }: BlockInfoProps) => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const checkIsDone = () => {
     if (task?.type && task.type === 'bying') {
@@ -39,6 +37,7 @@ export const BlockInfo = ({
   };
 
   const isDone = checkIsDone();
+  const isClaiming = false;
 
   console.log('openSubscription', openSubscription);
 
@@ -48,14 +47,7 @@ export const BlockInfo = ({
     setTask?.(prev => prev.map(t => t.id === id ? { ...t, loading: true } : t));
 
     if (task?.type === 'bying') {
-      openSubscription?.('x2', 2);
-      showSuccessToast(
-        <DoneIcon />,
-        t('toasts.taskCompleted.title'),
-        t('toasts.taskCompleted.description')
-      );
-      shootConfetti();
-      TelegramModule.useLink(task?.config?.ChannelLink);
+      navigate(`/`);
     }
   }
 
@@ -77,7 +69,11 @@ export const BlockInfo = ({
 
       <div className={styles.info}>
         {isDone ? (
-          <div className={styles.done}><p>{t('tasks.blockInfo.done')}</p></div>
+          <div className={styles.done}>
+            <DoneIcon />
+          </div>
+        ) : isClaiming ? (
+          <div className={styles.claiming}><p>{t('tasks.blockInfo.claim')}</p></div>
         ) : task?.loading ? (
           <div className={styles.process}>
             <div className={styles.load}></div>

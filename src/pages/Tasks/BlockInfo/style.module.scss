@@ -88,10 +88,24 @@
       .done {
         display: flex;
         width: fit-content;
+        
+        svg {
+          width: 14px;
+          height: 14px;
+
+          path {
+            stroke: #00CA48;
+          }
+        }
+      }
+
+      .claiming {
+        display: flex;
+        width: fit-content;
 
         p {
-          color: #00CA48;
-          font-size: 13px;
+          color: #0091FF;
+          font-size: 15px;
           font-weight: 400;
           line-height: 19px;
         }

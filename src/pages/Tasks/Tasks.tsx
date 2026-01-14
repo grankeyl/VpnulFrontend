@@ -84,10 +84,13 @@ export function Tasks() {
                         image={x.config.TaskImage}
                         title={t('tasks.block.subscribe', { name: x?.config?.ChannelName })}
                         description={t('tasks.block.subscribeTo', { time: formatTimeLocalized(x?.hours, t) })}
+                        hours={x?.hours}
                         loading={loadTasks}
 
                         setTask={setTasks}
                         task={x}
+                        
+                        openSubscription={openSubscription}
                     />
                 ))}
 

@@ -96,3 +96,14 @@ export function timeLeftMoscow(unixTimestampSeconds: number): { hours: number, m
 
   return { hours, minutes };
 }
+
+export function formatTimestamp(ms: number) {
+  const date = new Date(ms);
+
+  const day = date.getDate();
+  const month = date.toLocaleString('en', { month: 'short' });
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+
+  return `${day} ${month} ${hours}:${minutes}`;
+}
