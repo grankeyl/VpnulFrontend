@@ -31,7 +31,7 @@ export const Balance = () => {
 
         <div className={styles.buttons}>
           <div className={styles.button}>
-            <button onClick={() => onClick({ id: 1 })}>
+            <button onClick={() => onClick({ id: 1 })} disabled={userData?.RSBalance < 2500}>
               <MinusIcon />
               <h4>{t('referrals.balance.withdraw')}</h4>
             </button>

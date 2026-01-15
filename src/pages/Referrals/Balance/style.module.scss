@@ -105,6 +105,11 @@
           transform: scale(0.95);
       }
 
+      &:disabled {
+        opacity: .25;
+        pointer-events: none;
+      }
+
       svg {
         width: 15px;
         height: 15px;

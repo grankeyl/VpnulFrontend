@@ -21,8 +21,8 @@ export const Plan = ({
   const { t } = useTranslation();
   const navigate = useNavigate();
   const subscribeData = useUserStore((s) => s.subscriptionData);
-  const timeLeft = timeLeftMoscow(subscribeData?.expires);
-  const subscribeHours = formatDaysOrHoursLocalized(timeLeft.hours, t);
+  const hoursLeft = timeLeftMoscow(subscribeData?.expires);
+  const subscribeHours = formatDaysOrHoursLocalized(hoursLeft, t);
   const [daysMatch, hoursMatch] = subscribeHours.match(/(\d+\s\S+)/g) || [];
 
   function redirectTo(path: string) {

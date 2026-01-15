@@ -55,19 +55,16 @@ export function formatTimeLocalized(hours: number, t: TFunction): string {
 }
 
 export function formatDaysOrHoursLocalized(hours: number, t: TFunction): string {
-  if (hours < 0) throw new Error("0 hours");
-
+  console.log(hours);
   const HOURS_IN_DAY = 24;
 
   if (hours < HOURS_IN_DAY) {
-    // меньше одного дня — только часы
-    const h = Math.floor(hours);
+    const h = Math.ceil(hours);
     return `${h} ${declensionLocalized(h, t, 'time.hours')}`;
-  } else {
-    // один день и больше — только дни
-    const days = Math.floor(hours / HOURS_IN_DAY);
-    return `${days} ${declensionLocalized(days, t, 'time.days')}`;
   }
+
+  const days = Math.ceil(hours / HOURS_IN_DAY);
+  return `${days} ${declensionLocalized(days, t, 'time.days')}`;
 }
 
 export function inviteFriendsLocalized(count: number, t: TFunction): string {
@@ -80,21 +77,15 @@ export function inviteFriendsLocalized(count: number, t: TFunction): string {
   return `${count} ${form}`;
 }
 
-export function timeLeftMoscow(unixTimestampSeconds: number): { hours: number, minutes: number } {
+export function timeLeftMoscow(unixTimestampSeconds: number): number {
   const now = new Date();
-  // текущее время в Москве
   const nowMoscow = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Moscow" }));
-  
-  const endDate = new Date(unixTimestampSeconds * 1000); // переводим в миллисекунды
-  const diffMs = endDate.getTime() - nowMoscow.getTime(); // разница в миллисекундах
+  const endDate = new Date(unixTimestampSeconds * 1000);
 
-  if (diffMs <= 0) return { hours: 0, minutes: 0 };
+  const diffMs = endDate.getTime() - nowMoscow.getTime();
+  if (diffMs <= 0) return 0;
 
-  const totalMinutes = Math.floor(diffMs / 1000 / 60);
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-
-  return { hours, minutes };
+  return diffMs / 1000 / 60 / 60; // дробные часы
 }
 
 export function formatTimestamp(ms: number) {
