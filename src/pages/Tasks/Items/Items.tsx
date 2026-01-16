@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from './style.module.scss';
+
 import ChevroneRightIcon from "../../../icons/ChevroneRight";
+import TelegramModule from "../../../hooks/useTelegram";
 
 import DoneIcon from "../../../icons/Done";
 
+import * as userApi from "../../../api/user/user.api";
 import * as taskApi from "../../../api/task/task.api";
 
 import { formatTimeLocalized, getImageUrl, inviteFriendsLocalized } from '../../../utils/app';
@@ -40,7 +43,9 @@ export const Items: React.FC<ItemsProps> = ({
   openSubscription,
 }) => {
   const { t } = useTranslation();
+
   const userDataMeta = useUserStore((s) => s.userDataMeta);
+  const setSubscriptionData = useUserStore((s) => s.setSubscriptionData);
 
   const refCount = userDataMeta?.ref_count || 0;
 
@@ -57,6 +62,16 @@ export const Items: React.FC<ItemsProps> = ({
   }, [tasks]);
 
   const safeTasks = Array.isArray(tasks) ? tasks : [];
+
+  const addSubscription = async () => {
+    const initDataRaw = TelegramModule.initDataRaw() as any;
+
+    const init = await userApi.init(initDataRaw);
+    if (!init) return;
+    if (!init.subscription) return;
+
+    setSubscriptionData({ ...init.subscription });
+  }
 
   function onClick(x: TaskItem) {
     if (!x || x.loading || x.user_status === 'claimed') return;
@@ -84,6 +99,7 @@ export const Items: React.FC<ItemsProps> = ({
         t('toasts.taskCompleted.description')
       );
       shootConfetti();
+      addSubscription();
       setTasks?.(prev => prev.map(t => t.id === res.data.task_id ? { ...t, loading: false, user_status: 'claimed' } : t));
     }
   }

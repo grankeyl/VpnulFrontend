@@ -20,7 +20,6 @@
   gap: 10px;
   width: 100%;
   height: fit-content;
-  margin-top: 72px;
 
   .head {
     display: flex;
@@ -119,7 +118,8 @@
   width: 100%;
   height: fit-content;
   padding: 0 20px;
-
+  margin-top: 72px;
+  
   .item {
     display: flex;
     justify-content: start;

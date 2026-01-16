@@ -1,5 +1,7 @@
 import { TFunction } from 'i18next';
 
+import * as userApi from "../api/user/user.api";
+
 import TelegramModule from "../hooks/useTelegram";
 
 function declensionLocalized(number: number, t: TFunction, key: string): string {
@@ -14,12 +16,13 @@ export const getImageUrl = (path: string) => {
   return `${import.meta.env.VITE_APP_S3_URL}/${path}`;
 };
 
-export function inviteFriend(code: string) {
+export async function inviteFriend(code: string) {
   if (!code) return;
-  const miniAppLink = import.meta.env.VITE_APP_MINI_APP_LINK;
-  const link = `${miniAppLink}=${code}`;
-  const message = 'Invite friends';
-  TelegramModule.useShare(link, message);
+  const res = await userApi.share();
+  if (res.message !== 'ok') return;
+  if (res.data) {
+    TelegramModule.useShareMessage(res.data.prepared_message_id);
+  }
 }
 
 export function formatTimeLocalized(hours: number, t: TFunction): string {

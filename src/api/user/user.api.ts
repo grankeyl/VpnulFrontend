@@ -19,3 +19,22 @@ export async function init(initData: string) {
     return false;
   }
 }
+
+export async function share() {
+  try {
+    const initData = Cookies.get("init-data") || "";
+    const response = await api.post(
+      "/share",
+      {},
+      { headers: { "X-Init-Data": initData } }
+    );
+
+    if (response.status === 200) {
+      Cookies.set("init-data", initData);
+      return response.data;
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}

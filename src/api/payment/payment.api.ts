@@ -64,6 +64,29 @@ export async function createRSBalance(sub_id: string) {
   }
 }
 
+export async function createFreekassa(sub_id: string) {
+  try {
+    const initData = Cookies.get("init-data") || "";
+    const response = await api.post(
+      "/payment/freekassa/create",
+      { 
+        sub_id,
+        payment_method: 'sbp',
+      },
+      { headers: { "X-Init-Data": initData } }
+    );
+    return response.data;
+  } catch (e: any) {
+    if (e?.response?.data) {
+      return e.response.data;
+    }
+    return {
+      ok: false,
+      error: "unknown error",
+    };
+  }
+}
+
 export function subscribeToPayment(
   paymentId: string,
   onMessage: (data: any) => void,
@@ -88,4 +111,27 @@ export function subscribeToPayment(
   };
 
   return es;
+}
+
+export async function rsBalanceWithdraw() {
+  try {
+    const initData = Cookies.get("init-data") || "";
+    const response = await api.post(
+      "/payment/rsbalance/withdraw",
+      { },
+      { headers: { "X-Init-Data": initData } }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return response.data;
+  } catch (e: any) {
+    if (e?.response?.data) {
+      return e.response.data;
+    }
+    return {
+      ok: false,
+      error: "unknown error",
+    };
+  }
 }

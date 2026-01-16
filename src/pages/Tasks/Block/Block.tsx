@@ -3,6 +3,7 @@ import styles from './style.module.scss';
 import ChevroneRightIcon from "../../../icons/ChevroneRight";
 import DoneIcon from "../../../icons/Done";
 
+import * as userApi from "../../../api/user/user.api";
 import * as taskApi from "../../../api/task/task.api";
 
 import { getImageUrl } from '../../../utils/app';
@@ -12,6 +13,7 @@ import { useEffect, useRef } from 'react';
 import { showSuccessToast } from '../../../components/Toast/toastManager';
 import { shootConfetti } from '../../../utils/confetti';
 import TelegramModule from '../../../hooks/useTelegram';
+import { useUserStore } from '../../../store/user.store';
 
 type BlockProps = {
   id: number;
@@ -39,6 +41,8 @@ export const Block = ({
 }: BlockProps) => {
   const { t } = useTranslation();
 
+  const setSubscriptionData = useUserStore((s) => s.setSubscriptionData);
+
   const taskIntervalRef = useRef<any | null>(null);
   const startTimeRef = useRef<number | null>(null);
 
@@ -65,6 +69,16 @@ export const Block = ({
       );
     }
   };
+
+  const addSubscription = async () => {
+    const initDataRaw = TelegramModule.initDataRaw() as any;
+
+    const init = await userApi.init(initDataRaw);
+    if (!init) return;
+    if (!init.subscription) return;
+
+    setSubscriptionData({ ...init.subscription });
+  }
 
   // 🚀 1. Один раз дергаем start, потом запускаем watcher
   const startSubscriptionFlow = async (id: any) => {
@@ -143,7 +157,7 @@ export const Block = ({
       if (task.user_status === 'ready_to_claim') {
         claim(task.id);
       } else {
-        TelegramModule.useLink(task?.config?.ChannelLink);
+        // TelegramModule.useLink(task?.config?.ChannelLink);
         startSubscriptionFlow(task.id);
       }
     }
@@ -164,6 +178,7 @@ export const Block = ({
 
       shootConfetti();
       stopWatcher();
+      addSubscription();
 
       setTask?.(prev =>
         prev.map(t =>

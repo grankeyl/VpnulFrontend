@@ -82,7 +82,7 @@ export const Plan = ({
 
       <div className={styles.devices}>
         <DeviceIcon />
-        <p>{t('profile.plan.devices', { devices: devices, limit: limitDevices })}</p>
+        <p>{t('profile.plan.devices', { devices: limitDevices-devices, limit: limitDevices })}</p>
       </div>
     </div>
   );

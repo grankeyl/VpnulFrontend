@@ -70,7 +70,6 @@ export function BuySubscriptionModal({
     const initDataRaw = TelegramModule.initDataRaw() as any;
 
     const init = await userApi.init(initDataRaw);
-    console.log(init);
     if (!init) return;
     if (!init.subscription) return;
 
@@ -141,10 +140,37 @@ export function BuySubscriptionModal({
     }
   }
 
+  async function createPaymentFreekassa() {
+    setBuyButtonLoading(true);
+    const res = await paymentApi.createFreekassa(data.ID);
+    
+    if (!res.ok) {
+      setBuyButtonLoading(false);
+      showErrorToast(
+        <CloseIcon />,
+        t('toasts.payment.error.title'),
+        res.error
+      );
+      return;
+    };
+    if (res.ok) {
+      TelegramModule.useLink(res.pay_url);
+      const sse = paymentApi.subscribeToPayment(res.payment_id, (data) => {
+        if (data.status === "paid") {
+          sse.close();
+          subscribeActivation();
+          return true;
+        }
+      });
+      return;
+    }
+  }
+
   function handleBuy() {
     if (methodActive === 'stars') createPaymentStars();
     if (methodActive === 'send') createPayment();
     if (methodActive === 'balance') createPaymentRSBalance();
+    if (methodActive === 'sbp') createPaymentFreekassa();
   }
 
   return (

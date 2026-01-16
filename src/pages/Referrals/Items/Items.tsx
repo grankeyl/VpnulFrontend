@@ -1,32 +1,12 @@
 import styles from './style.module.scss';
 
-import * as referralsApi from "../../../api/referrals/referrals.api";
-
 import { useUserStore } from '../../../store/user.store';
 import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
 import { formatTimestamp } from '../../../utils/app';
 
-// const data = Array.from({ length: 4 }, (_, i) => ({
-//   id: i,
-//   image: '/pages/home/gift.png',
-//   name: 'Grankeyl',
-//   date: '20 hours ago',
-// }));
-
-export const Items = () => {
+export const Items = ({ items }: { items: any[] }) => {
   const { t } = useTranslation();
   const userDataMeta = useUserStore((s) => s.userDataMeta);
-  const [items, setItems] = useState<any[]>([]);
-
-  async function getItems() {
-    const res = await referralsApi.history();
-    setItems(res.items);
-  }
-
-  useEffect(() => {
-    getItems();
-  }, []);
 
   return (
     <div className={styles.items}>
