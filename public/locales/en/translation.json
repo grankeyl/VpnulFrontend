@@ -1,5 +1,4 @@
 {
-    "friends": ["friend", "friends", "friends"],
     "time": {
         "hours": ["hour", "hours", "hours"],
         "days": ["day", "days", "days"],
@@ -7,8 +6,192 @@
         "months": ["month", "months", "months"],
         "years": ["year", "years", "years"]
     },
+    "friends": ["friend", "friends", "friends"],
+
+    "toasts": {
+        "copyLink": {
+            "title": "Link copied",
+            "description": "Now you can share it with friends"
+        },
+        "taskCompleted": {
+            "title": "Task complited",
+            "description": "Reward successfully added"
+        },
+        "payment": {
+            "error": {
+                "title": "Error"
+            }
+        }
+    },
+
+    "footer": {
+        "vpn": "VPN",
+        "tasks": "Tasks",
+        "profile": "Profile"
+    },
     "home": {
-        "title": "VPN",
-        "description": "Unlock your digital freedom here"
+        "context": {
+            "title": "VPN",
+            "description": "Unlock your digital freedom here"
+        },
+        "block": {
+            "title": "Free subscription",
+            "description": "For inviting friend"
+        },
+        "items": {
+            "popular": "popular"
+        },
+        "modals": {
+            "buySubscription": {
+                "description": "VPN-subscription",
+                "features": {
+                    "speed": "Speed up to 1GB/s",
+                    "device": "Up to 3 devices",
+                    "shield": "Privately",
+                    "fast": "Easy to use"
+                },
+                "methods": {
+                    "sbp": "SBP",
+                    "send": "@send",
+                    "stars": "Stars",
+                    "balance": "Balance"
+                },
+                "buy": "Buy for {{price}} rub."
+            },
+            "activeSubscription": {
+                "context": {
+                    "title": "Subscription is active",
+                    "description": "Now you can connect to"
+                },
+                "footer": {
+                    "text": "Follow a simple steps to connect",
+                    "buy": "To instruction"
+                }
+            }
+        }
+    },
+    "tasks": {
+        "context": {
+            "title": "Tasks",
+            "description": "Get bonuses for simple actions"
+        },
+        "block": {
+            "subscribe": "Subscribe to {{name}}",
+            "subscribeTo": "{{time}} subscription",
+            "done": "Complited",
+            "claim": "Claim"
+        },
+        "blockInfo": {
+            "title": "Doubled subscription",
+            "description": "For any first purchase",
+            "done": "Complited",
+            "claim": "Claim"
+        },
+        "items": {
+            "invite": "Invite {{friends}}",
+            "subscribeTo": "{{time}} subscription",
+            "done": "Complited",
+            "claim": "Claim"
+        },
+        "footer": {
+            "youInvited": "You invited {{friends}}"
+        },
+        "modals": {
+            "activeSubscription": {
+                "context": {
+                    "title": "Subscription is active",
+                    "description": "Task complited, you earned {{time}} of subscription"
+                }
+            }
+        }
+    },
+    "profile": {
+        "context": {
+            "notSubscriber": "not a subscriber",
+            "subscriber": "subscribed"
+        },
+        "plan": {
+            "description": "your subscription",
+            "buttons": {
+                "add": "Add",
+                "connect": "Connect"
+            },
+            "devices": "{{devices}} из {{limit}} devices available"
+        },
+        "funcs": {
+            "howToUse": "How to connect?",
+            "support": "Support"
+        },
+        "block": {
+            "title": "Referral program",
+            "description": "Earn 30% from friends"
+        },
+        "empty": {
+            "description": "Nothing here :(",
+            "choosePlan": "Choose plan"
+        }
+    },
+    "referrals": {
+        "context": {
+            "title": "Referral program",
+            "description": "Earn 30% from friends"
+        },
+        "link": {
+            "title": "Your referral link",
+            "share": "Share"
+        },
+        "balance": {
+            "description": "your balance",
+            "withdraw": "Withdraw",
+            "minWithdraw": "Minimum amount to withdraw {{amount}}rub"
+        },
+        "items": {
+            "head": {
+                "title": "Referrals"
+            }
+        },
+        "modals": {
+            "withdraw": {
+                "main": {
+                    "enterAmount": "Enter amount to withdraw",
+                    "amount": "Amount",
+                    "info": "You will receive:"
+                },
+                "context": {
+                    "processed": "Withdrawals are processed via",
+                    "willReceive": "You will receive $USDT in your balance. Make sure you have opened the"
+                },
+                "button": "Withdraw {{amount}}rub"
+            }
+        }
+    },
+    "instruction": {
+        "context": {
+            "title": "Instruction",
+            "description": "learn how to connect for available platforms"
+        },
+        "info": {
+            "first": {
+                "title": "Download the App",
+                "description": "Use “iOS Russia” for Russia",
+                "description1": "Its needed to connect VPN",
+                "download": "Download"
+            },
+            "second": {
+                "title": "Connect",
+                "description": "Use “Connect” button in profile here",
+                "profile": "Profile"
+            }
+        }
+    },
+    "redirect": {
+        "context": {
+            "title": "Connecting",
+            "description": "Please, пwait.."
+        },
+        "or": {
+            "description": "If nothing happened use the button below",
+            "button": "Connect"
+        }
     }
 }

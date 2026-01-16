@@ -1,5 +1,6 @@
 import './App.css';
 
+import i18next from 'i18next';
 import TelegramModule from './hooks/useTelegram';
 
 import { useEffect, useState } from 'react';
@@ -64,6 +65,7 @@ function App() {
     setUserDataMeta({ ...init.meta });
     setSubscriptionData({ ...init.subscription });
 
+    i18next.changeLanguage(init.user.Language);
     await initStartApp(initData.start_param);
     
     TelegramModule.readyMiniApp();

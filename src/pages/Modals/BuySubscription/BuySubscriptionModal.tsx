@@ -92,6 +92,7 @@ export function BuySubscriptionModal({
     };
     if (res.pay_url) {
       TelegramModule.useLink(res.pay_url);
+      setTimeout(() => { setBuyButtonLoading(false); }, 5000);
       const sse = paymentApi.subscribeToPayment(res.payment_id, (data) => {
         if (data.status === "paid") {
           sse.close();
@@ -111,6 +112,7 @@ export function BuySubscriptionModal({
     };
     if (res.pay_url) {
       TelegramModule.useLink(res.pay_url);
+      setBuyButtonLoading(false);
       const sse = paymentApi.subscribeToPayment(res.payment_id, (data) => {
         if (data.status === "paid") {
           sse.close();
@@ -154,7 +156,7 @@ export function BuySubscriptionModal({
       return;
     };
     if (res.ok) {
-      TelegramModule.useLink(res.pay_url);
+      TelegramModule.useTgLink(res.pay_url);
       const sse = paymentApi.subscribeToPayment(res.payment_id, (data) => {
         if (data.status === "paid") {
           sse.close();

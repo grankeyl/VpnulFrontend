@@ -1,4 +1,3 @@
-import WebApp from "@twa-dev/sdk";
 import { useEffect } from "react";
 import { useSubsStore } from "../store/subs.store";
 
@@ -6,7 +5,6 @@ export function useTelegramLifecycle() {
   useEffect(() => {
     const handleVisibility = () => {
       if (document.visibilityState === "hidden") {
-        console.log("APP HIDDEN → CLEAR STORE");
         useSubsStore.getState().clearSubsData();
         localStorage.removeItem("subs_store_v1");
       }
