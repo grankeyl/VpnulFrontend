@@ -9,7 +9,7 @@ import DoneIcon from "../../../icons/Done";
 import * as userApi from "../../../api/user/user.api";
 import * as taskApi from "../../../api/task/task.api";
 
-import { formatTimeLocalized, getImageUrl, inviteFriendsLocalized } from '../../../utils/app';
+import { formatTimeLocalized, getImageUrl, inviteFriend, inviteFriendsLocalized } from '../../../utils/app';
 import { useUserStore } from '../../../store/user.store';
 import { useTranslation } from "react-i18next";
 import { showSuccessToast } from "../../../components/Toast/toastManager";
@@ -82,6 +82,7 @@ export const Items: React.FC<ItemsProps> = ({
       if (x.user_status === 'ready_to_claim') {
         claim(x.id);
       } else {
+        inviteFriend('123');
         setTasks?.(prev => prev.map(t => t.id === x.id ? { ...t, loading: false } : t));
       }
     }

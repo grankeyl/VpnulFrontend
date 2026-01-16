@@ -25,7 +25,6 @@ export const BlockInfo = ({
   loading = false,
   setTask,
   task,
-  openSubscription,
 }: BlockInfoProps) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -38,8 +37,6 @@ export const BlockInfo = ({
 
   const isDone = checkIsDone();
   const isClaiming = false;
-
-  console.log('openSubscription', openSubscription);
 
   function onClick(id: number) {
     if (task?.loading) return;

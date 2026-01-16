@@ -8,6 +8,7 @@ import AddIcon from "../../../icons/Add";
 import LinkIcon from "../../../icons/Link";
 import DeviceIcon from "../../../icons/Device";
 import { useUserStore } from '../../../store/user.store';
+import TelegramModule from '../../../hooks/useTelegram';
 
 export const Plan = ({ 
   connectLink,
@@ -27,6 +28,15 @@ export const Plan = ({
 
   function redirectTo(path: string) {
     navigate(path);
+  }
+
+  function openLink(link: string) {
+    try {
+      window.open(link, '_blank');
+      return;
+    } catch (e) {
+      TelegramModule.useLink(link);
+    }
   }
 
   return (
@@ -67,15 +77,10 @@ export const Plan = ({
           </div>
 
           <div className={styles.button}>
-            <a
-              href={connectLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.linkButton}
-            >
+            <button onClick={() => openLink(connectLink)}>
               <LinkIcon className={styles.link} />
               <h4>{t('profile.plan.buttons.connect')}</h4>
-            </a>
+            </button>
           </div>
         </div>
       </div>
