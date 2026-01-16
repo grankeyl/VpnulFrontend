@@ -1,0 +1,114 @@
+.redirect {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    gap: 22px;
+    height: 100vh;
+    width: 100%;
+    max-width: 500px;
+    padding: 0 clamp(8px, 3.2vw, var(--padding-indent));
+    padding-top: calc(
+        var(--tg-safe-area-inset-top, -15px) + 72px
+    );
+    padding-bottom: calc(var(--bottom-indent) * 3);
+}
+
+.inner {
+    width: 100%;
+    height: fit-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 18px;
+  width: 100%;
+}
+
+.timerNumber {
+  color: #0091FF;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  animation: breathe 0.75s ease-in-out infinite;
+  text-shadow: 0 0 0 rgba(0, 145, 255, 0.0);
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+    text-shadow: 0 0 0 rgba(0,145,255,0.0);
+  }
+  50% {
+    transform: scale(1.08);
+    text-shadow: 0 0 14px rgba(0,145,255,0.35);
+  }
+}
+
+.or {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 22px;
+  gap: 13px;
+  width: 100%;
+  height: fit-content;
+
+  .descr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2px;
+    max-width: 220px;
+    text-align: center;
+
+    p {
+        color: #FFF;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18px;
+    }
+  }
+
+  .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2px;
+    width: fit-content;
+
+    button {
+      width: fit-content;
+      height: 46px;
+      border-radius: 16px;
+      border-radius: 1000px;
+      background: linear-gradient(0deg, #0091FF 0%, #0091FF 100%), linear-gradient(0deg, #999 0%, #999 100%), linear-gradient(0deg, #FFF 0%, #FFF 100%), #FFF;
+      background-blend-mode: plus-darker, overlay, saturation, normal;
+      box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.10), 0 1px 8px 0 rgba(0, 0, 0, 0.12);
+      transition: transform 0.2s ease-in-out;
+      padding: 0 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+
+      &:active {
+          transform: scale(0.95);
+      }
+
+      h4 {
+        color: #FFF;
+        font-size: 17px;
+        font-weight: 510;
+        line-height: normal;
+      }
+    }
+  }
+}

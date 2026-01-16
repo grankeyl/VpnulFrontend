@@ -66,7 +66,7 @@ export function formatDaysOrHoursLocalized(hours: number, t: TFunction): string 
     return `${h} ${declensionLocalized(h, t, 'time.hours')}`;
   }
 
-  const days = Math.ceil(hours / HOURS_IN_DAY);
+  const days = Math.floor((hours + 22) / 24);
   return `${days} ${declensionLocalized(days, t, 'time.days')}`;
 }
 
@@ -100,4 +100,32 @@ export function formatTimestamp(ms: number) {
   const minutes = date.getMinutes().toString().padStart(2, '0');
 
   return `${day} ${month} ${hours}:${minutes}`;
+}
+
+export type DeviceType = 'ios' | 'android' | 'mac' | 'windows' | 'other';
+
+export function getDevice(): DeviceType {
+  const ua = navigator.userAgent;
+
+  if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && 'ontouchend' in document)) {
+    return 'ios';
+  }
+
+  // Android
+  if (/android/i.test(ua)) {
+    return 'android';
+  }
+
+  // Windows
+  if (/Win/.test(navigator.platform)) {
+    return 'windows';
+  }
+
+  // macOS
+  if (/Mac/.test(navigator.platform)) {
+    return 'mac';
+  }
+
+  // fallback
+  return 'other';
 }

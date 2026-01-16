@@ -1,6 +1,6 @@
 import styles from './style.module.scss';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Context } from "./Context/Context";
 import { Block } from "./Block/Block";
 import { Items } from "./Items/Items";
@@ -18,9 +18,10 @@ export function Home() {
     const { t } = useTranslation();
     const { open } = useModal();
 
+    const loadedRef = useRef(false);
+
     const [items, setItems] = useState<any[]>([]);
     const [loadingItems, setLoadingItems] = useState(true);
-
     const subsData = useSubsStore((s) => s.subsData);
     const setSubsData = useSubsStore((s) => s.setSubsData);
 
@@ -30,18 +31,23 @@ export function Home() {
     const subActivated = useUserStore((s) => s.userData?.SubActivated);
 
     const getSubs = async () => {
-        if (subsData) {
-            setItems(subsData);
+        try {
+            if (subsData) {
+                console.log("subsData", subsData);
+                setItems(subsData);
+                return;
+            }
+
+            const res = await subsApi.subs();
+            if (!res.ok) return;
+
+            setItems(res.data);
+            setSubsData(res.data);
+        } catch (e) {
+            console.error("getSubs error", e);
+        } finally {
             setLoadingItems(false);
-            return;
         }
-
-        const res = await subsApi.subs();
-        if (!res.ok) return;
-
-        setItems(res.data);
-        setSubsData(res.data);
-        setLoadingItems(false);
     };
 
     function openSubscription() {
@@ -60,9 +66,12 @@ export function Home() {
         openSubscription();
         shootConfetti();
         setUserData({ ...userData, SubActivated: false });
-    }, [subActivated, items]);
+    }, [subActivated]);
 
     useEffect(() => {
+        if (loadedRef.current) return;
+        loadedRef.current = true;
+
         TelegramModule.hideBackButton();
         getSubs();
     }, []);

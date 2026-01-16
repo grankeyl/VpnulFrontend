@@ -3,16 +3,16 @@ import './App.css';
 import TelegramModule from './hooks/useTelegram';
 
 import { useEffect, useState } from 'react';
-import { useSubsStore } from "./store/subs.store";
 
 import { Home } from './pages/Home/Home';
 import { Tasks } from './pages/Tasks/Tasks';
 import { Profile } from './pages/Profile/Profile';
 import { Referrals } from './pages/Referrals/Referrals';
 import { Instruction } from './pages/Instrucrion/Instrucrion';
+import { Redirect } from './pages/Redirect/Redirect';
 import { ToastProvider } from './components/Toast/ToastContext';
 
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { Load } from './components/Load/Load';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer/Footer';
@@ -24,6 +24,7 @@ import { ActiveSubscription } from './pages/Modals/ActiveSubscription/ActiveSubs
 
 import { userApi } from "./api";
 import { useUserStore } from './store/user.store';
+import { useTelegramLifecycle } from './hooks/useTelegramLifecycle';
 
 const registry = {
   buySubscription: BuySubscriptionModal,
@@ -33,14 +34,26 @@ const registry = {
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [mounted, setMounted] = useState(false);
+
+  useTelegramLifecycle();
 
   const setUserData = useUserStore((s) => s.setUserData);
   const setUserDataMeta = useUserStore((s) => s.setUserDataMeta);
   const setSubscriptionData = useUserStore((s) => s.setSubscriptionData);
 
+  const checkPageOpener = () => {
+    if (location.pathname.startsWith("/redirect")) {
+      TelegramModule.readyMiniApp();
+      setMounted(true);
+    }
+  };
+
   const auth = async () => {
+    checkPageOpener();
+
     const initDataRaw = TelegramModule.initDataRaw() as any;
     const initData = TelegramModule.initData() as any;
 
@@ -84,11 +97,6 @@ function App() {
     auth();
   }, []);
 
-  window.addEventListener("beforeunload", () => {
-    useSubsStore.getState().clearSubsData();
-    localStorage.removeItem("subs_store_v1");
-  });
-
   if (!mounted) {
     return <Load />;
   }
@@ -105,6 +113,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/profile/referrals" element={<Referrals />} />
                 <Route path="/instruction" element={<Instruction />} />
+                <Route path="/redirect" element={<Redirect />} />
                 <Route path="/w" element={<div style={{ color: "white", padding: 24 }}>Tasks page</div>} />
               </Routes>
               <Footer />

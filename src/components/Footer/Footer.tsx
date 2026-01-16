@@ -40,6 +40,7 @@ export const Footer = () => {
 
   const isHide = () => {
     if (location.pathname.startsWith('/instruction')) return true;
+    if (location.pathname.startsWith('/redirect')) return true;
     if (location.pathname.startsWith('/profile/referrals')) return true;
     return false;
   }

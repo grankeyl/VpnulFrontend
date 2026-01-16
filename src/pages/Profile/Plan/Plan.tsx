@@ -1,15 +1,14 @@
 import styles from './style.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { formatDaysOrHoursLocalized, timeLeftMoscow } from '../../../utils/app';
+import { formatDaysOrHoursLocalized, getDevice, timeLeftMoscow } from '../../../utils/app';
 import { useTranslation } from 'react-i18next';
+import { useUserStore } from '../../../store/user.store';
 
 import LockIcon from "../../../icons/Lock";
 import AddIcon from "../../../icons/Add";
 import LinkIcon from "../../../icons/Link";
 import DeviceIcon from "../../../icons/Device";
-import { useUserStore } from '../../../store/user.store';
 import TelegramModule from '../../../hooks/useTelegram';
-import WebApp from '@twa-dev/sdk';
 
 export const Plan = ({ 
   connectLink,
@@ -32,17 +31,16 @@ export const Plan = ({
   }
 
   function openLink(link: string) {
-    const url = link;
-
-    try {
-      if (WebApp) {
-        TelegramModule.useLink(url);
-        TelegramModule.useTgLink(url);
-      } else {
-        window.open(url, '_blank');
-      }
-    } catch (e) {
-      window.location.href = url;
+    const device = getDevice();
+    if (device === 'ios') {
+      window.open(link, '_blank');
+    } else if (device === 'android') {
+      window.open(link, '_system');
+    } else if (device === 'mac') {
+      window.open(link, '_blank');
+    } else {
+      const im = import.meta.env.VITE_APP_URL;
+      TelegramModule.useTgLink(`${im}/redirect?redirect_to=${link}`);
     }
   }
 

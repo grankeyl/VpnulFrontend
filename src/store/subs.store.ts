@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 type SubsState = {
   subsData: any | null;
@@ -14,6 +14,9 @@ export const useSubsStore = create<SubsState>()(
       setSubsData: (subsData) => set({ subsData }),
       clearSubsData: () => set({ subsData: null }),
     }),
-    { name: "subs_store_v1" }
+    {
+      name: "subs_store_v1",
+      storage: createJSONStorage(() => sessionStorage)
+    }
   )
 );
