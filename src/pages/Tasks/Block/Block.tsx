@@ -157,7 +157,7 @@ export const Block = ({
       if (task.user_status === 'ready_to_claim') {
         claim(task.id);
       } else {
-        // TelegramModule.useLink(task?.config?.ChannelLink);
+        TelegramModule.useLink(task?.config?.ChannelLink);
         startSubscriptionFlow(task.id);
       }
     }

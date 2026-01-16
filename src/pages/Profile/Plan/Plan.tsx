@@ -9,6 +9,7 @@ import LinkIcon from "../../../icons/Link";
 import DeviceIcon from "../../../icons/Device";
 import { useUserStore } from '../../../store/user.store';
 import TelegramModule from '../../../hooks/useTelegram';
+import WebApp from '@twa-dev/sdk';
 
 export const Plan = ({ 
   connectLink,
@@ -31,11 +32,17 @@ export const Plan = ({
   }
 
   function openLink(link: string) {
+    const url = link;
+
     try {
-      window.open(link, '_blank');
-      return;
+      if (WebApp) {
+        TelegramModule.useLink(url);
+        TelegramModule.useTgLink(url);
+      } else {
+        window.open(url, '_blank');
+      }
     } catch (e) {
-      TelegramModule.useLink(link);
+      window.location.href = url;
     }
   }
 
