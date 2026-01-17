@@ -55,10 +55,10 @@ export function BuySubscriptionModal({
     },
   ];
   const methodsData = [
-    { id: 'sbp', title: t('home.modals.buySubscription.methods.sbp') },
-    { id: 'send', title: t('home.modals.buySubscription.methods.send') },
-    { id: 'stars', title: t('home.modals.buySubscription.methods.stars') },
-    { id: 'balance', title: t('home.modals.buySubscription.methods.balance'), soon: userData?.RSBalance < data.price_rub }
+    { id: 'sbp', title: t('home.modals.buySubscription.methods.sbp'), soon: false },
+    { id: 'send', title: t('home.modals.buySubscription.methods.send'), soon: false },
+    { id: 'stars', title: t('home.modals.buySubscription.methods.stars'), soon: false },
+    // { id: 'balance', title: t('home.modals.buySubscription.methods.balance'), soon: userData?.RSBalance < data.price_rub }
   ];
   const [methodActive, setMethodActive] = useState(methodsData[0].id);
 
