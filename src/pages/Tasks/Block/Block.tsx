@@ -28,6 +28,7 @@ type BlockProps = {
 };
 
 const MAX_PENDING_TIME = 30_000;
+const POLL_INTERVAL = 2000;
 
 export const Block = ({
   image,
@@ -40,18 +41,29 @@ export const Block = ({
   openSubscription,
 }: BlockProps) => {
   const { t } = useTranslation();
-
   const setSubscriptionData = useUserStore((s) => s.setSubscriptionData);
 
   const taskIntervalRef = useRef<any | null>(null);
   const startTimeRef = useRef<number | null>(null);
+  const waitingReturnRef = useRef(false);
 
   const isDone = task?.user_status === 'claimed';
   const isClaiming = task?.user_status === 'ready_to_claim';
 
   useEffect(() => {
-    return () => stopWatcher();
-  }, []);
+    const onVisible = () => {
+      if (document.visibilityState === 'visible' && waitingReturnRef.current && task?.id) {
+        startTaskWatcher(task.id);
+        waitingReturnRef.current = false;
+      }
+    };
+
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible);
+      stopWatcher();
+    };
+  }, [task?.id]);
 
   const stopWatcher = (id?: number, resetLoading = true) => {
     if (taskIntervalRef.current) {
@@ -72,15 +84,12 @@ export const Block = ({
 
   const addSubscription = async () => {
     const initDataRaw = TelegramModule.initDataRaw() as any;
-
     const init = await userApi.init(initDataRaw);
-    if (!init) return;
-    if (!init.subscription) return;
+    if (init?.subscription) {
+      setSubscriptionData({ ...init.subscription });
+    }
+  };
 
-    setSubscriptionData({ ...init.subscription });
-  }
-
-  // 🚀 1. Один раз дергаем start, потом запускаем watcher
   const startSubscriptionFlow = async (id: any) => {
     if (taskIntervalRef.current) return;
 
@@ -93,15 +102,18 @@ export const Block = ({
         return;
       }
 
-      startTaskWatcher(id);
+      // ждём ухода пользователя в канал и возврата
+      waitingReturnRef.current = true;
 
     } catch (e) {
       console.error('start error:', e);
       stopWatcher(id);
     }
   };
-  
+
   const startTaskWatcher = (id: number) => {
+    if (taskIntervalRef.current) return;
+
     taskIntervalRef.current = setInterval(async () => {
       try {
         if (
@@ -141,10 +153,10 @@ export const Block = ({
       } catch (e) {
         console.error('task watcher error:', e);
       }
-    }, 2000);
+    }, POLL_INTERVAL);
   };
 
-  const onClick = () => {
+  const onClick = async () => {
     if (!task || task.loading || isDone) return;
 
     setTask?.(prev =>
@@ -157,8 +169,8 @@ export const Block = ({
       if (task.user_status === 'ready_to_claim') {
         claim(task.id);
       } else {
+        await startSubscriptionFlow(task.id);
         TelegramModule.useLink(task?.config?.ChannelLink);
-        startSubscriptionFlow(task.id);
       }
     }
   };
