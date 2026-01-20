@@ -28,15 +28,9 @@ export const BlockInfo = ({
 }: BlockInfoProps) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const checkIsDone = () => {
-    if (task?.type && task.type === 'bying') {
-      // return true;
-    }
-    return false;
-  };
 
-  const isDone = checkIsDone();
-  const isClaiming = false;
+  const isDone = task?.user_status === 'claimed';
+  const isClaiming = task?.user_status === 'ready_to_claim';
 
   function onClick(id: number) {
     if (task?.loading) return;
