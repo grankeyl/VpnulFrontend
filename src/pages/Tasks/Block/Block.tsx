@@ -170,7 +170,7 @@ export const Block = ({
         claim(task.id);
       } else {
         await startSubscriptionFlow(task.id);
-        // TelegramModule.useLink(task?.config?.ChannelLink);
+        TelegramModule.useLink(task?.config?.ChannelLink);
       }
     }
   };
