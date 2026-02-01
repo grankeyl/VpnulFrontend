@@ -77,10 +77,10 @@ function App() {
 
   function miniAppTransport(dtx: any) {
     if (!dtx || dtx === "debug") return;
-    if (dtx === "instruction") { navigate("/instruction"); return; }
-    if (dtx === "instruction") { navigate("/instruction"); return; }
-    if (dtx === "instruction") { navigate("/instruction"); return; }
-    if (dtx === "instruction") { navigate("/instruction"); return; }
+    if (dtx === "tasks") { navigate("/tasks"); return; }
+    if (dtx === "profile") { navigate("/profile"); return; }
+    if (dtx === "referrals") { navigate("/profile/referrals"); return; }
+    if (dtx === "redirect") { navigate("/redirect"); return; }
     if (dtx === "instruction") { navigate("/instruction"); return; }
   }
 
@@ -116,7 +116,6 @@ function App() {
                 <Route path="/profile/referrals" element={<Referrals />} />
                 <Route path="/instruction" element={<Instruction />} />
                 <Route path="/redirect" element={<Redirect />} />
-                <Route path="/w" element={<div style={{ color: "white", padding: 24 }}>Tasks page</div>} />
               </Routes>
               <Footer />
             </div>
