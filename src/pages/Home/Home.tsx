@@ -2,7 +2,7 @@ import styles from './style.module.scss';
 
 import { useEffect, useRef, useState } from 'react';
 import { Context } from "./Context/Context";
-import { Block } from "./Block/Block";
+import { BlockInfo } from "./BlockInfo/BlockInfo";
 import { Items } from "./Items/Items";
 import { useTranslation } from 'react-i18next';
 
@@ -22,6 +22,8 @@ export function Home() {
 
     const [items, setItems] = useState<any[]>([]);
     const [loadingItems, setLoadingItems] = useState(true);
+    const [neverTookTheWheel, setNeverTookTheWheel] = useState(false);
+
     const subsData = useSubsStore((s) => s.subsData);
     const setSubsData = useSubsStore((s) => s.setSubsData);
 
@@ -43,6 +45,7 @@ export function Home() {
 
             setItems(res.data);
             setSubsData(res.data);
+            setNeverTookTheWheel(res.never_took_trial);
         } catch (e) {
             console.error("getSubs error", e);
         } finally {
@@ -82,15 +85,22 @@ export function Home() {
                 title={t('home.context.title')}
                 description={t('home.context.description')}
             />
-            <Block 
-                title={t('home.block.title')}
-                image="/pages/home/gift.png"
-                description={t('home.block.description')}
-                redirect="/tasks"
+            <BlockInfo 
+                id={0}
+                key={0}
+                image={'/bages/double.svg'}
+                title={t('tasks.blockInfo.title')}
+                description={t('tasks.blockInfo.description')}
+                loading={false}
+            
+                openSubscription={openSubscription}
             />
             <Items 
                 loading={loadingItems}
+                neverTookTheWheel={neverTookTheWheel}
                 items={items}
+
+                setNeverTookTheWheel={setNeverTookTheWheel}
             />
         </div>
     );

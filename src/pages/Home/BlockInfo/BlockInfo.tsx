@@ -1,6 +1,5 @@
 import styles from './style.module.scss';
 
-import ChevroneRightIcon from "../../../icons/ChevroneRight";
 import DoneIcon from "../../../icons/Done";
 
 import { getImageUrl } from '../../../utils/app';
@@ -69,9 +68,7 @@ export const BlockInfo = ({
           <div className={styles.process}>
             <div className={styles.load}></div>
           </div>
-        ) : (
-          <div className={styles.chevrone}><ChevroneRightIcon /></div>
-        )}
+        ) : (<></>)}
       </div>
     </div>
   );

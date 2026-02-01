@@ -2,7 +2,6 @@ import styles from './style.module.scss';
 
 import { useEffect, useState } from 'react';
 import { Context } from "./Context/Context";
-import { BlockInfo } from "./BlockInfo/BlockInfo";
 import { Block } from "./Block/Block";
 import { Items } from "./Items/Items";
 import { useTranslation } from 'react-i18next';
@@ -25,7 +24,6 @@ export function Tasks() {
         { id: 5, category: 'other', config: { TaskImage: '' }, loading: false },
     ]);
 
-    const firstTasks = tasks.filter((x) => x.category === 'first');
     const mainTasks = tasks.filter((x) => x.category === 'main');
     const otherTasks = tasks.filter((x) => x.category === 'other');
 
@@ -60,22 +58,6 @@ export function Tasks() {
         <>
             <div className={`${styles.tasks} page`}>
                 <Context />
-
-                {firstTasks.map((x) => (
-                    <BlockInfo 
-                        id={x.id}
-                        key={x.id}
-                        image={x.config.TaskImage}
-                        title={t('tasks.blockInfo.title')}
-                        description={t('tasks.blockInfo.description')}
-                        loading={loadTasks}
-
-                        setTask={setTasks}
-                        task={x}
-
-                        openSubscription={openSubscription}
-                    />
-                ))}
 
                 {mainTasks.map((x) => (
                     <Block 

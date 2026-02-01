@@ -82,6 +82,10 @@
 
     &:active { transform: translateY(-1px) scale(0.98); }
 
+    &.firstNever {
+      border: 1px solid #008CFA;
+    }
+
     .skeletonBg {
       opacity: 0;
       transition: opacity .25s ease;
@@ -193,7 +197,7 @@
           color: #FFF;
           font-size: 15px;
           font-style: normal;
-          font-weight: 510;
+          font-weight: 400;
           line-height: normal;
         }
       }
@@ -268,5 +272,287 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+.custom {
+  display: flex;
+  flex-direction: column;
+  border-radius: 18px;
+  background: #121212;
+  padding: 13px 18px;
+  gap: 18px;
+  position: relative;
+
+  .skeletonBg {
+    display: block;
+  }
+
+  .skeletonDont {
+    display: none;
+    opacity: 0;
+    transition: opacity .25s ease;
+    pointer-events: none;
+  }
+
+  &.skeleton {
+    .title {
+      h4 { opacity: 0; }
+      .skeletonBg { opacity: .65; height: 21px; }
+    }
+    .eco {
+      background: transparent;
+      border: none;
+      p { opacity: 0; }
+      .skeletonBg { opacity: .65; }
+    }
+    .time { 
+      width: 120px;
+      height: 40px;
+      position: relative;
+      .value { opacity: 0; }
+      .text { opacity: 0; }
+      .skeletonBg { opacity: .65; }
+    }
+    .select { 
+      width: 100%;
+      height: 18px;
+      position: relative;
+      .daysSlider { opacity: 0; }
+      .skeletonBg { opacity: .65; }
+    }
+    .footer {
+      .descr {
+        position: relative;
+        width: 40%;
+        height: 31px;
+        p { opacity: 0; }
+        .skeletonBg { opacity: .65; }
+      }
+      .skeletonBg { opacity: .65; }
+      button { opacity: 0; }
+    }
+  }
+
+  .title {
+    width: fit-content;
+    display: flex;
+    position: relative;
+
+    h4 {
+      color: #FFF;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 16px;
+    }
+  }
+
+  .eco {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 9px;
+    width: fit-content;
+    height: 29px;
+    padding: 0 10px;
+    border-radius: 311px;
+    border-bottom: 0.8px solid #303030;
+    background: linear-gradient(180deg, #424242 -92.23%, #0D0D0D 205.73%);
+    position: absolute;
+    top: 3px;
+    right: 10px;
+
+    p {
+      color: #FFF;
+      text-align: center;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 510;
+      line-height: normal;
+    }
+  }
+
+  .time {
+    display: flex;
+    width: fit-content;;
+    gap: 6px;
+    margin-top: -2px;
+
+    .value {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      h4 {
+        color: #FFF;
+        font-size: 33px;
+        font-weight: 500;
+        line-height: 19px;
+        font-family: 'SFRounded';
+      }
+    }
+
+    .text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 9px;
+
+      p {
+        color: #FFF;
+        font-size: 23px;
+        font-weight: 400;
+        line-height: 19px;
+        font-family: 'SFRounded';
+      }
+    }
+  }
+
+  .select {
+    width: 100%;
+    height: 18px;
+    
+    .daysSlider {
+      width: 100%;
+      height: 18px;
+      position: relative;
+      cursor: pointer;
+
+      --x: 2px;      /* px позиция thumb */
+      --thumb: 14px; /* px размер */
+      --pad: 2px;    /* px отступ */
+    }
+
+    .disabled { opacity: .7; cursor: default; }
+
+    .track {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      box-shadow: 0 0 0.623px rgba(0,0,0,.10), 0 0.311px 2.491px rgba(0,0,0,.12);
+      overflow: hidden;
+    }
+
+    .fill {
+      position: absolute;
+      top: 0; bottom: 0; left: 0;
+
+      /* ✅ до центра кружка */
+      width: calc(var(--x) + (var(--thumb) / 2));
+      border-radius: 999px;
+      background: linear-gradient(0deg, #0091FF 0%, #0091FF 100%);
+    }
+
+    .thumb {
+      position: absolute;
+      top: 50%;
+      left: calc(var(--x) + (var(--thumb) / 2));
+      transform: translate(-50%, -50%);
+
+      width: var(--thumb);
+      height: var(--thumb);
+      border-radius: 999px;
+      background: #fff;
+      z-index: 1;
+    }
+
+    .nativeRange {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      z-index: 2;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 0;
+    }
+
+    .nativeRange:disabled { cursor: default; }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    height: fit-content;
+
+    .descr {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        color: rgba(255, 255, 255, 0.39);
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 18.5px;
+
+        span {
+          color: #2FA5FF;
+        }
+      }
+    }
+
+    .button {
+      display: flex;
+      margin-top: 2px;
+      width: fit-content;
+      position: relative;
+
+      button, a {
+        width: fit-content;
+        height: 33px;
+        border-radius: 35px;
+        background: linear-gradient(0deg, #0091FF 0%, #0091FF 100%), linear-gradient(0deg, #999 0%, #999 100%), linear-gradient(0deg, #FFF 0%, #FFF 100%), #FFF;
+        background-blend-mode: plus-darker, overlay, saturation, normal;
+        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.10), 0 1px 8px 0 rgba(0, 0, 0, 0.12);
+        display: flex;
+        justify-content: center;
+        padding: 0 12px;
+        align-items: center;
+        gap: 2px;
+        transition: transform 0.2s ease-in-out;
+
+        @media screen and (max-width: 366px) {
+          svg {
+            width: 17px !important;
+            height: 17px !important;
+            margin-top: -1px;
+          }
+          h4 {
+            font-size: 14px !important;
+          }
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }        
+
+        svg {
+          width: 21px;
+          height: 21px;
+          margin-top: -1px;
+          fill: #FFF;
+
+          &.link {
+            margin-right: 3px;
+          }
+        }
+
+        h4 {
+          color: #FFF;
+          text-align: center;
+          font-size: 15px;
+          font-weight: 500;
+          line-height: normal;
+        }
+      }
+    }
   }
 }

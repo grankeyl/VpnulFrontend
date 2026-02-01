@@ -58,7 +58,6 @@ export function formatTimeLocalized(hours: number, t: TFunction): string {
 }
 
 export function formatDaysOrHoursLocalized(hours: number, t: TFunction): string {
-  console.log(hours);
   const HOURS_IN_DAY = 24;
 
   if (hours < HOURS_IN_DAY) {

@@ -181,7 +181,7 @@ export function BuySubscriptionModal({
         <div className={styles.context}>
           <div className={styles.head}>
             <div className={styles.image}>
-              <img src={data.Image} alt="logo" />
+              <img src={data?.Type === 'custom' ? '/pages/sub-custom.svg' : data.Image} />
             </div>
           </div>
 
