@@ -154,6 +154,7 @@ export const Items = ({
           const isLoaded = Boolean(loadedImages[key]);
           const Sale = getSale(x);
           const view = buildItemView(x, i, isSkeleton);
+          const isPopular = !Boolean(Sale) && i === 2;
 
           return (
             <div
@@ -170,30 +171,66 @@ export const Items = ({
             >
               <div className={`skeleton-bg ${styles.skeletonBg}`} />
 
-              {(Boolean(Sale) || i === 2) && (
-                <div className={styles.sale}>
+              {(isPopular) && (
+                <div
+                  className={`${styles.sale} ${isPopular ? styles.salePopular : ""}`}
+                >
                   <div className={styles.bg} />
-                  <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55" fill="none">
-                    <path
-                      d="M51.4965 26.401L28.599 3.50354C26.3557 1.26026 23.3132 0 20.1408 0H1.99763C0.221489 0 -0.667999 2.14743 0.587919 3.40336L51.5967 54.4121C52.8526 55.668 55 54.7785 55 53.0024V34.8593C55 31.6868 53.7397 28.6443 51.4965 26.401Z"
-                      fill="url(#paint0_linear_1_501)"
-                    />
-                    <defs>
-                      <linearGradient
-                        id="paint0_linear_1_501"
-                        x1="27.0891"
-                        y1="0.996818"
-                        x2="27.0891"
-                        y2="54.825"
-                        gradientUnits="userSpaceOnUse"
-                      >
-                        <stop stopColor="#6CADF2" />
-                        <stop offset="1" stopColor="#126099" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55" fill="none">
+                      <path
+                        d="M51.4965 26.401L28.599 3.50354C26.3557 1.26026 23.3132 0 20.1408 0H1.99763C0.221489 0 -0.667999 2.14743 0.587919 3.40336L51.5967 54.4121C52.8526 55.668 55 54.7785 55 53.0024V34.8593C55 31.6868 53.7397 28.6443 51.4965 26.401Z"
+                        fill="url(#paint0_linear_1_501)"
+                      />
+                      <defs> 
+                        <linearGradient
+                          id="paint0_linear_1_501"
+                          x1="27.0891"
+                          y1="0.996818"
+                          x2="27.0891"
+                          y2="54.825"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop stopColor="#6CADF2" />
+                          <stop offset="1" stopColor="#126099" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+
                   <div className={styles.text}>
-                    {Sale ? <p>-{Sale}%</p> : i === 2 ? <p>{t("home.items.popular")}</p> : null}
+                    {Sale ? <p>-{Sale}%</p> : isPopular ? <p>{t("home.items.popular")}</p> : null}
+                  </div>
+                </div>
+              )}
+
+              {(Boolean(Sale)) && (
+                <div
+                  className={`${styles.sale} ${isPopular ? styles.salePopular : ""}`}
+                >
+                  <div className={styles.bg} />
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55" fill="none">
+                      <path
+                        d="M51.4965 26.401L28.599 3.50354C26.3557 1.26026 23.3132 0 20.1408 0H1.99763C0.221489 0 -0.667999 2.14743 0.587919 3.40336L51.5967 54.4121C52.8526 55.668 55 54.7785 55 53.0024V34.8593C55 31.6868 53.7397 28.6443 51.4965 26.401Z"
+                        fill="url(#paint0_linear_1_501)"
+                      />
+                      <defs>
+                        <linearGradient
+                          id="paint0_linear_1_501"
+                          x1="27.0891"
+                          y1="0.996818"
+                          x2="27.0891"
+                          y2="54.825"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop stopColor="#6CADF2" />
+                          <stop offset="1" stopColor="#126099" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+
+                  <div className={styles.text}>
+                    {Sale ? <p>-{Sale}%</p> : isPopular ? <p>{t("home.items.popular")}</p> : null}
                   </div>
                 </div>
               )}

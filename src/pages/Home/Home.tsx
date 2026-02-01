@@ -30,12 +30,18 @@ export function Home() {
     const userData = useUserStore((s) => s.userData);
     const setUserData = useUserStore((s) => s.setUserData);
 
+    const neverTookTheWheelStore = useSubsStore((s) => s.neverTookTheWheel);
+    const setNeverTookTheWheelStore = useSubsStore((s) => s.setNeverTookTheWheel);
+
     const subActivated = useUserStore((s) => s.userData?.SubActivated);
 
     const getSubs = async () => {
         try {
+            if (neverTookTheWheelStore) {
+                setNeverTookTheWheel(neverTookTheWheelStore);
+            }
+            
             if (subsData) {
-                console.log("subsData", subsData);
                 setItems(subsData);
                 return;
             }
@@ -46,6 +52,7 @@ export function Home() {
             setItems(res.data);
             setSubsData(res.data);
             setNeverTookTheWheel(res.never_took_trial);
+            setNeverTookTheWheelStore(res.never_took_trial);
         } catch (e) {
             console.error("getSubs error", e);
         } finally {
