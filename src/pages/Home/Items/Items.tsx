@@ -6,11 +6,14 @@ import { formatDaysOrHoursLocalized, formatTimeLocalized } from "../../../utils/
 import { useTranslation } from "react-i18next";
 import { DaysSlider } from "./DaysSlider";
 import { showErrorToast } from "../../../components/Toast/toastManager";
+import { useUserStore } from "../../../store/user.store";
 
 import * as subsApi from "../../../api/subs/subs.api";
+import * as userApi from "../../../api/user/user.api";
 
 // Icons
 import Close from "../../../icons/Close";
+import TelegramModule from "../../../hooks/useTelegram";
 
 export type SubItem = any;
 
@@ -53,6 +56,10 @@ export const Items = ({
   const [loadedImages, setLoadedImages] = useState<Record<string | number, boolean>>({});
 
   const [customDays, setCustomDays] = useState<number>(7);
+
+  const userData = useUserStore((s) => s.userData);
+  const setUserData = useUserStore((s) => s.setUserData);
+  const setSubscriptionData = useUserStore((s) => s.setSubscriptionData);
 
   const customHours = useMemo(() => {
     const totalHours = customDays * 24;
@@ -110,7 +117,6 @@ export const Items = ({
     const isFirst = i === 0;
     const firstFree = neverTookTheWheel && isFirst;
 
-    // тут вся логика отдельным объектом как ты просил:
     const rootClass = [
       styles.item,
       isSkeletonNow ? styles.skeleton : "",
@@ -128,6 +134,21 @@ export const Items = ({
     };
   }
 
+  const addSubscription = async () => {
+    const initDataRaw = TelegramModule.initDataRaw() as any;
+
+    const init = await userApi.init(initDataRaw);
+    if (!init) return;
+    if (!init.subscription) return;
+
+    setSubscriptionData({ ...init.subscription });
+  }
+
+  function subscribeActivation() {
+    addSubscription();
+    setUserData({ ...userData, SubActivated: true });
+  }
+
   async function getTrial(x: SubItem) {
     const res = await subsApi.trial();
     if (!res.ok) {
@@ -136,14 +157,7 @@ export const Items = ({
     };
 
     setNeverTookTheWheel(false);
-
-    open("activeSubscription", {
-      data: {
-        type: 'home',
-        title: t('home.modals.activeSubscription.context.title'),
-        description: t('home.modals.activeSubscription.context.description')
-      }
-    });
+    subscribeActivation();
   } 
 
   return (
