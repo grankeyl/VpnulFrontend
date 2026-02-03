@@ -40,7 +40,7 @@ export const Context = ({
         </div>
 
         <div className={styles.stars}>
-          {Array.from({ length: 70 }).map((_, i) => (
+          {Array.from({ length: 88 }).map((_, i) => (
             <span key={i} className={styles.star} />
           ))}
         </div>

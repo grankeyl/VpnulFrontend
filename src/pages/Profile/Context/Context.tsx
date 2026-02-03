@@ -17,7 +17,7 @@ export const Context = ({ subscribed }: { subscribed?: boolean }) => {
           <img src={userData?.Photo} alt="logo" />
         </div>
         <div className={styles.stars}>
-          {Array.from({ length: 70 }).map((_, i) => (
+          {Array.from({ length: 88 }).map((_, i) => (
             <span key={i} className={styles.star} />
           ))}
         </div>

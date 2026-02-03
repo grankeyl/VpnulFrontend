@@ -55,18 +55,20 @@
       will-change: transform, opacity;
       animation: fly linear infinite;
 
-      @for $i from 1 through 70 {
+      @for $i from 1 through 88 {
         &:nth-child(#{$i}) {
           $x: math.random() * 600 - 300px; // овал по горизонтали
           $y: math.random() * 240 - 120px; // овал по вертикали
           $duration: math.random() * 3 + 3; // 3–6 секунд
           $delay: math.random() * 3;
+          $randomSize: math.random() * 0.8 + 0.6; // случайный размер от 0.6 до 1.4
 
           --x: #{$x};
           --y: #{$y};
+          --scale: #{$randomSize};
           animation-duration: #{$duration}s;
           animation-delay: #{$delay}s;
-          transform: translate(0,0) scale(math.random() * 0.7 + 0.3); // случайный размер
+          transform: translate(0,0) scale(#{$randomSize});
         }
       }
     }

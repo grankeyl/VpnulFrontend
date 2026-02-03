@@ -9,7 +9,7 @@ import DoneIcon from "../../../icons/Done";
 import * as userApi from "../../../api/user/user.api";
 import * as taskApi from "../../../api/task/task.api";
 
-import { formatTimeLocalized, getImageUrl, inviteFriend, inviteFriendsLocalized } from '../../../utils/app';
+import { getImageUrl, inviteFriend, inviteFriendsLocalized } from '../../../utils/app';
 import { useUserStore } from '../../../store/user.store';
 import { useTranslation } from "react-i18next";
 import { showSuccessToast } from "../../../components/Toast/toastManager";
@@ -62,6 +62,14 @@ export const Items: React.FC<ItemsProps> = ({
   }, [tasks]);
 
   const safeTasks = Array.isArray(tasks) ? tasks : [];
+
+  function formatDaysOnly(hours: number): string {
+    const days = Math.round(hours / 24);
+    const forms: [string, string, string] = t('time.days', { returnObjects: true }) as any;
+    const cases = [2, 0, 1, 1, 1, 2];
+    const form = forms[(days % 100 > 4 && days % 100 < 20) ? 2 : cases[Math.min(days % 10, 5)]];
+    return `${days} ${form}`;
+  }
 
   const addSubscription = async () => {
     const initDataRaw = TelegramModule.initDataRaw() as any;
@@ -125,7 +133,7 @@ export const Items: React.FC<ItemsProps> = ({
                 <div className={styles.text}>
                   <h4>{t('tasks.items.invite', { friends: inviteFriendsLocalized(x?.config?.TaskNeedFriends, t) })}</h4>
                   <div className={styles.descr}>
-                    <p>{t('tasks.items.subscribeTo', { time: formatTimeLocalized(x?.hours, t) })}</p>
+                    <p>{t('tasks.items.subscribeTo', { time: formatDaysOnly(x?.hours) })}</p>
                   </div>
                 </div>
 
