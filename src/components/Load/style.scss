@@ -1,33 +1,133 @@
+@use 'sass:math';
+
 .load-page {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: #000;
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .loader {
-    width: 42px;
-    height: 42px;
-    border: 3px solid #121212;
-    border-radius: 50%;
-    border-top-color: #0091FF;
-    animation: spin 1s ease-in-out infinite;
-    -webkit-animation: spin 1s ease-in-out infinite;
-  }
-
-  @keyframes spin {
-    to {
-      -webkit-transform: rotate(360deg);
+  
+  .info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    
+    .image {
+      width: 85px;
+      height: 85px;
+      margin: auto;
+      margin-bottom: 16px;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
     }
-  }
-  @-webkit-keyframes spin {
-    to {
-      -webkit-transform: rotate(360deg);
+
+    h4 {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 7px;
+    }
+
+    p {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .descr {
+      opacity: .5;
+      font-size: 14px;
+    }
+
+    .button {
+      width: fit-content;
+      margin: auto;
+      margin-top: 16px;
+      position: relative;
+
+      .stars {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        pointer-events: none;
+        z-index: 0;
+        opacity: .4;
+
+        .star {
+          position: absolute;
+          width: 8px;
+          height: 8px;
+          background: url('/pages/home/star.svg') center / contain no-repeat;
+          opacity: 0;
+          transform: translate(0, 0) scale(0.3);
+          will-change: transform, opacity;
+          animation: fly linear infinite;
+
+          @for $i from 1 through 88 {
+            &:nth-child(#{$i}) {
+              $x: math.random() * 600 - 300px; // овал по горизонтали
+              $y: math.random() * 240 - 120px; // овал по вертикали
+              $duration: math.random() * 3 + 3; // 3–6 секунд
+              $delay: math.random() * 3;
+              $randomSize: math.random() * 0.8 + 0.6; // случайный размер от 0.6 до 1.4
+
+              --x: #{$x};
+              --y: #{$y};
+              --scale: #{$randomSize};
+              animation-duration: #{$duration}s;
+              animation-delay: #{$delay}s;
+              transform: translate(0,0) scale(#{$randomSize});
+            }
+          }
+        }
+
+        @keyframes fly {
+          0% {
+            transform: translate(0, 0) scale(var(--scale, 0.3));
+            opacity: 0;
+          }
+          10% { opacity: 1; }
+          80% { opacity: 1; }
+          100% {
+            transform: translate(var(--x), var(--y)) scale(var(--scale, 1));
+            opacity: 0;
+          }
+        }
+      }
+
+      button {
+        width: fit-content;
+        height: fit-content;
+        border-radius: 999px;
+        background: linear-gradient(0deg, #0091FF 0%, #0091FF 100%), #FFF;
+        background-blend-mode: normal;
+        box-shadow: 0 0 0.623px rgba(0,0,0,.10), 0 0.311px 2.491px rgba(0,0,0,.12);
+        transition: transform 0.2s ease-in-out;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 21px;
+        z-index: 1;
+        position: relative;
+
+        &:active {
+          transform: scale(0.88);
+        }
+
+        h4 {
+          color: #FFF;
+          font-size: 17px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          margin: 0;
+        }
+      }
     }
   }
 }
